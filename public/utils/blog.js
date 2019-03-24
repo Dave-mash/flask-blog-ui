@@ -1,7 +1,7 @@
 const mainDiv = document.querySelector('.post_container');
 const socket = io();
 const fetchUrl = 'https://flask-blog-api.herokuapp.com/api/v1';
-const serverUrl = 'http://127.0.0.1:3000';
+const serverUrl = 'http://127.0.0.1:3000' || 'https://dave-mash.github.io/flask-blog-ui/public';
 
 const setCookie = (cname, cvalue, exdays) => {
     var d = new Date();
