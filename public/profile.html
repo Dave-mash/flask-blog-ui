@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flask Blog</title>
+</head>
+<body>
+    <h2>Profile page</h2>
+    <div class="container">
+        <h2 id="home_id">Home</h2>
+        <div class="user_details"></div>
+        <a href=""><i id="edit_button">Edit account!</i></a>
+        <form id="edit_account_form">
+            <label for="first_name">First name</label>
+            <input type="text"><br>
+            <label for="last_name">Last name</label>
+            <input type="text"><br>
+            <label for="email">Email</label>
+            <input type="email"><br>
+            <label for="username">Username</label>
+            <input type="text"><br>
+            <button>Update</button>
+        </form>
+        <div class="my_posts">
+            <h3 class="title_header">My posts</h3>
+            <p>click on post to edit</p>
+            <div class="posts"></div>
+        </div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./utils/profile.js"></script>
+</body>
+</html>

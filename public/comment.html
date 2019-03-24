@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Flask Blog</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="post_div">
+            <h1 id="post_title"></h1>
+            <h2 id="home_id">Home</h2>
+            <p id="post_body"></p>
+        </div>
+        <h3>comments</h3>
+        <div class="comments_list"></div>
+        <form id="comment_form">
+            <textarea name="comment" placeholder="comment" id="comment" cols="30" rows="10"></textarea>
+            <button>Comment</button>
+        </form>
+        <span id="span"></span>
+    </div>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="./utils/comment.js"></script>
+</html>

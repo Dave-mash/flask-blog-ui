@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        a, #topic_id {
+            cursor: pointer;
+        }
+        #author_name {
+            color: blue;
+        }
+        
+    </style>
+    <title>Flask Blog</title>
+</head>
+
+<body>
+    <header>
+        <span id="login_prompt"></span>
+        <h2 id="home"><a id="home_anchor_tag">Home</a></h2>
+        <h2 id="profile"><a id="profile_anchor_tag">Profile</a></h2>
+        <h2 id="h2"><a id="log_state"></a></h2>
+    </header>
+    <div class="container">
+        <div class="post_container"></div>
+        <form id="post_form">
+            <input type="text" name="title" placeholder="title" id="post_title"><br />
+            <textarea name="textarea" placeholder="body" id="post_body" cols="25" rows="8"></textarea>
+            <button>Post</button>
+        </form>
+        <span id="span"></span>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./utils/blog.js"></script>
+</body>
+
+</html>

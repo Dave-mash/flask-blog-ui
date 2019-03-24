@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        .highlighter {
+            border: 1.5px solid red;
+        }
+        .no_highlighter {
+            border: none;
+        }
+        b {
+            color: red;
+        }
+    </style>
+    <title>Flask Blog</title>
+</head>
+<body>
+    <div class="container">
+        <form id="signup_form">
+            <label for="first_name">First name <b>*</b></label>
+            <input name="first_name" id="first_name" type="text">
+            <label for="last_name">Last name <b>*</b></label>
+            <input name="last_name" id="last_name" type="text">
+            <label for="username">Username <b>*</b></label>
+            <input name="username" id="username" type="text">
+            <label for="email">Email <b>*</b></label>
+            <input name="email" id="email" type="email">
+            <label for="password">Password <b>*</b></label>
+            <input name="password" id="password" type="password">
+            <label for="confirm password">Confirm Password <b>*</b></label>
+            <input name="confirm_password" id="confirm_password" type="password">
+            <span id="error_span"></span>
+            <button>Sign Up</button>
+        </form>
+    </div>
+    <script src="./utils/user.js"></script>
+</body>
+</html>
