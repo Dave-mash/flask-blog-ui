@@ -1,30 +1,8 @@
 const mainDiv = document.querySelector('.post_container');
 const socket = io();
-const fetchUrl = 'https://flask-blog-api.herokuapp.com/api/v1';
-const serverUrl = 'http://127.0.0.1:3000' || 'https://dave-mash.github.io/flask-blog-ui/public';
-
-const setCookie = (cname, cvalue, exdays) => {
-    var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    var expires = "expires=" + d.toUTCString();
-    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
-}
-
-const getCookie = (cname) => {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
+const fetchUrl = 'http://127.0.0.1:5000/api/v1'; // 'https://flask-blog-api.herokuapp.com/api/v1';
+const serverUrl = 'http://127.0.0.1:3000';
+// 'https://dave-mash.github.io/flask-blog-ui/public'
 
 const postsHandler = (post) => {
     let postDiv = `
@@ -46,12 +24,16 @@ const postsHandler = (post) => {
         let urlSearch = new URLSearchParams(window.location.search);
         let username = urlSearch.get('username');
         if (username) {
+            console.log(getCookie(username))
             let user = JSON.parse(getCookie(username));
             user['post'] = post['id'];
-            setCookie(username, user, 1);
+            setCookie(username, JSON.stringify(user), 1);
             window.location.href = `${serverUrl}/comment.html?username=${username}&post=${post['title']}&body=${post['body']}`;
         } else {
-            window.location.href = `${serverUrl}/comment.html?post=${post['title']}&body=${post['body']}`;
+            let span = document.getElementById('login_prompt');
+            span.innerHTML = '';
+            span.textContent = 'Please log in first!';
+            span.style.color = 'red';
         }
     });
 }
@@ -174,7 +156,7 @@ socket.on('connect', () => {
 
         let urlParams = new URLSearchParams(window.location.search);
         let myParams = urlParams.get('username');
-        let username = JSON.parse(getCookie(myParams)); // Local storage key
+        let username = getCookie(myParams); // Local storage key
 
         if (!username) {
             console.log('log in first')
@@ -182,6 +164,8 @@ socket.on('connect', () => {
             let b = '<b style="color:red;">You are not logged in!</b>';
             span.innerHTML = b;
         } else {
+
+            username = JSON.parse(username);
 
             if (title && body) {
 
@@ -196,6 +180,7 @@ socket.on('connect', () => {
                 }
 
                 fetch(`${fetchUrl}/${username.id}/posts`, {
+                    mode: 'cors',
                     method: 'POST',
                     body: JSON.stringify(post),
                     headers: {

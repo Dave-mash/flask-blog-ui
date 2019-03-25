@@ -1,14 +1,16 @@
 const socket = io();
 
 const userDetails = document.querySelector('.user_details');
+const fetchUrl = 'http://127.0.0.1:5000/api/v1';
+let edit_form = document.getElementById('edit_account_form');
+
 
 let profileUrlParams = new URLSearchParams(window.location.search);
 let username = profileUrlParams.get('username');
-let store = JSON.parse(localStorage.getItem(username));
-
+let store = JSON.parse(getCookie(username));
 
 // user's posts
-fetch(`http://127.0.0.1:5000/api/v1/profile/${store.id}`, {
+fetch(`${fetchUrl}/profile/${store.id}`, {
         method: 'GET',
         mode: 'cors',
         headers: {
@@ -21,51 +23,40 @@ fetch(`http://127.0.0.1:5000/api/v1/profile/${store.id}`, {
         },
         networkError => console.log(networkError)
     ).then(jsonResponse => {
-        if (jsonResponse.error === 'Signature expired. Please log in again.') {
-            window.location.href = 'http://127.0.0.1:3000/login.html';
-        }
         console.log(jsonResponse)
-        let h3 = document.createElement('h3');
-        h3.textContent = jsonResponse.user.username;
         let home = document.getElementById('home_id');
-        home.style.cursor = 'pointer';
+        
         home.addEventListener('click', () => {
-            window.location.href = `http://127.0.0.1:3000/index.html?username=` + username;
+            window.location.href = `http://127.0.0.1:3000/index.html?username=${username}`;
         });
-        userDetails.appendChild(h3);
-        let image = document.createElement('img');
-        let name = document.createElement('i');
-        let email = document.createElement('i');
-        let br = document.createElement('br');
-        let br2 = document.createElement('br');
-        email.textContent = jsonResponse.user.email;
-        name.textContent = `${jsonResponse.user.first_name} ${jsonResponse.user.last_name}`
-        image.style.width = '100px';
-        image.style.length = '100px';
-        image.setAttribute('src', `../images/${jsonResponse.user.image}`)
-        userDetails.appendChild(image);
-        userDetails.appendChild(br);
-        userDetails.appendChild(name);
-        userDetails.appendChild(br2);
-        userDetails.appendChild(email);
+
+        let details = `
+            <h3>${jsonResponse.user.username}</h3>
+            <img src='../images/${jsonResponse.user.image}' style='width:100px;length:100px;'/><br />
+            <i>${jsonResponse.user.first_name} ${jsonResponse.user.last_name}</i><br />
+            <i>${jsonResponse.user.email}</i>
+        `
+        userDetails.innerHTML = details;
 
         // posts
-
         let posts = document.querySelector('.posts');
         jsonResponse.posts.forEach(post => {
-            let postDiv = document.createElement('div');
-            let postTitle = document.createElement('b');
-            postTitle.textContent = post.title;
-            postTitle.style.cursor = 'pointer';
-            let postTime = document.createElement('i');
-            postTime.textContent = post.createdAt;
-            postDiv.appendChild(postTitle);
-            postDiv.appendChild(postTime);
-            let del = document.createElement('button');
-            del.className = 'delete_btn';
-            del.textContent = 'delete';
-            postDiv.appendChild(del);
-            posts.appendChild(postDiv);
+            let postDetails = `
+                <div class='post_details'>
+                    <b style='cursor:pointer;' class='post_title'>${post.title}</b>
+                    <i class='timestamp'>${post.createdAt}</i>
+                    <button class='delete_btn'>delete</button>
+                </div>
+            `
+            posts.innerHTML = postDetails;
+
+            // const formData = new FormData(form);
+            // const first_name = formData.get('first_name');
+            // const last_name = formData.get('last_name');
+            // const email = formData.get('email');
+            // const username = formData.get('username');
+            // const password = formData.get('password');
+            // const confirm_password = formData.get('confirm_password');
 
             // const user = {
             //     first_name,
@@ -76,8 +67,9 @@ fetch(`http://127.0.0.1:5000/api/v1/profile/${store.id}`, {
             //     image
             // };
 
-            postTitle.addEventListener('click', () => {
-                fetch(`http://127.0.0.1:5000/api/v1/profile/${store.id}`, {
+            edit_form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                fetch(`${fetchUrl}/profile/${store.id}`, {
                     method: 'PUT',
                     body: JSON.stringify(post),
                     mode: 'cors',
@@ -96,10 +88,12 @@ fetch(`http://127.0.0.1:5000/api/v1/profile/${store.id}`, {
                     console.log(jsonResponse);
                 });
             });
+
+            let del = document.querySelector('.delete_btn');
             console.log(del.parentElement.parentElement)
 
             del.addEventListener('click', () => {
-                fetch(`http://127.0.0.1:5000/api/v1/${store.id}/posts/${post.id}`, {
+                fetch(`${fetchUrl}/${store.id}/posts/${post.id}`, {
                         method: 'DELETE',
                         mode: 'cors',
                         headers: {
@@ -114,7 +108,6 @@ fetch(`http://127.0.0.1:5000/api/v1/profile/${store.id}`, {
                         },
                         networkError => console.log(networkError)
                     ).then(jsonResponse => {
-                        console.log(postDiv);
                         let parent = del.parentElement.parentElement;
                         let child = del.parentElement;
                         parent.removeChild(child);
@@ -125,7 +118,6 @@ fetch(`http://127.0.0.1:5000/api/v1/profile/${store.id}`, {
         console.log(jsonResponse);
     });
 
-let edit_form = document.getElementById('edit_account_form');
 edit_form.style.display = 'none';
 let edit_button = document.getElementById('edit_button');
 
@@ -142,3 +134,54 @@ edit_button.addEventListener('click', (e) => {
 socket.on('connect', () => {
     console.log('Profile page connected to Node server!');
 })
+
+    // commentData = new FormData(commentForm)
+    // textarea.value = p.textContent;
+    // const onChange = (e) => {
+    //     console.log(textarea.value);
+    //     console.log(commentData.get('updateComment'));
+    //     textarea.value = e.target.value;
+    //     console.log(textarea.value);
+    // }
+    // textarea.onchange = onChange;
+    // let updateComment = document.createElement('button');
+    // updateComment.textContent = 'update';
+    // commentForm.appendChild(textarea);
+    // commentForm.appendChild(updateComment);
+    // console.log(textarea);
+    // commentValue = commentData.get('updateComment')
+    // updatedComment = {
+    //     comment: textarea.value
+    // }
+    // console.log(updatedComment)
+    // commentForm.style.display = 'none';
+    // commentForm.addEventListener('submit', (e) => {
+    //     e.preventDefault();
+    //     fetch(`http://127.0.0.1:5000/api/v1/${comment.user_id}/comments/${comment.id}`, {
+    //         method: 'PUT',
+    //         mode: 'cors',
+    //         body: JSON.stringify(updatedComment),
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${user.auth_token}`,
+    //         }
+    //     }).then(res => {
+    //             return res.json();
+    //         },
+    //         networkError => console.log(networkError)
+    //     ).then(jsonResponse => {
+    //         console.log(jsonResponse);
+    //         commentForm.previousElementSibling.textContent = jsonResponse.comment
+    //         console.log(commentForm.previousElementSibling);
+    //     });
+    // });
+    // p.parentElement.appendChild(commentForm);
+    // b.style.cursor = 'pointer';
+
+    // b.addEventListener('click', () => {
+    //     if (commentForm.style.display == 'none') {
+    //         commentForm.style.display = 'block';
+    //     } else {
+    //         commentForm.style.display = 'none';
+    //     }
+    // });

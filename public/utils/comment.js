@@ -2,117 +2,78 @@ let commentParams = new URLSearchParams(window.location.search);
 const post = commentParams.get('post');
 const bodyText = commentParams.get('body');
 const username = commentParams.get('username');
-const id = JSON.parse(localStorage.getItem(username)).post;
+let user = JSON.parse(getCookie(username))
+console.log(user)
 const socket = io();
 
-socket.on('connect', () => {
-    console.log('comment.js connected')
-})
-
-const commentHandler = (comment) => {
-    let user = JSON.parse(localStorage.getItem(username));
-    let contentDiv = document.createElement('div');
+const commentHelper = (comment) => {
     let commentDiv = document.querySelector('.comments_list');
-    contentDiv.className = 'comment_item';
-    let b = document.createElement('b');
-    b.textContent = comment.username;
-    let p = document.createElement('p');
-    p.className = 'comment_text';
-    p.textContent = comment.comment;
-    contentDiv.appendChild(b);
-    contentDiv.appendChild(p);
-    commentDiv.appendChild(contentDiv);
+    let comDiv = document.createElement('div');
+    comDiv.className = 'comment_item';
+    var commentItem = '';
+
     if (comment.username == username) {
-        let commentForm = document.createElement('form');
-        let textarea = document.createElement('textarea');
-        textarea.name = 'updateComment';
-        let del = document.createElement('button');
-        commentData = new FormData(commentForm)
-        textarea.value = p.textContent;
-        const onChange = (e) => {
-            console.log(textarea.value);
-            console.log(commentData.get('updateComment'));
-            textarea.value = e.target.value;
-            console.log(textarea.value);
-        }
-        textarea.onchange = onChange;
-        let updateComment = document.createElement('button');
-        updateComment.textContent = 'update';
-        commentForm.appendChild(textarea);
-        commentForm.appendChild(updateComment);
-        console.log(textarea);
-        commentValue = commentData.get('updateComment')
-        updatedComment = {
-            comment: textarea.value
-        }
-        console.log(updatedComment)
-        commentForm.style.display = 'none';
-        commentForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            fetch(`http://127.0.0.1:5000/api/v1/${comment.user_id}/comments/${comment.id}`, {
-                method: 'PUT',
-                mode: 'cors',
-                body: JSON.stringify(updatedComment),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.auth_token}`,
-                }
-            }).then(res => {
-                    return res.json();
-                },
-                networkError => console.log(networkError)
-            ).then(jsonResponse => {
-                console.log(jsonResponse);
-                commentForm.previousElementSibling.textContent = jsonResponse.comment
-                console.log(commentForm.previousElementSibling);
+        commentItem = `
+            <b id='author_id'>${comment.username}</b>
+            <p class='comment_text'>${comment.comment}</p>
+            <button id='del'>delete</delete>
+        `;
+    } else {
+        console.log(comment)
+        commentItem = `
+            <b id='author_id'>${comment.username}</b>
+            <p class='comment_text'>${comment.comment}</p>
+        `;
+    }
+    comDiv.innerHTML = commentItem;
+    commentDiv.appendChild(comDiv)
+    let delBtn = document.getElementById('del');
+    console.log(commentDiv);
+    if (delBtn) {
+        console.log(delBtn.parentElement);
+        if (delBtn) {
+            delBtn.addEventListener('click', () => {
+                console.log('clicked')
+                fetch(`http://127.0.0.1:5000/api/v1/${comment.user_id}/${comment.post_id}/comments/${comment.id}`, {
+                        method: 'DELETE',
+                        mode: 'cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${user.auth_token}`,
+                        }
+                    })
+                    .then(res => {
+                            return res.json();
+                        },
+                        networkError => console.log(networkError)
+                    ).then(jsonResponse => {
+                        console.log(jsonResponse);
+                        let parent = delBtn.parentElement.parentElement;
+                        let child = delBtn.parentElement;
+                        document.location.reload()
+                        parent.removeChild(child);
+                        socket.emit('removeComment', delBtn)
+                    });
             });
-        });
-        p.parentElement.appendChild(commentForm);
-        del.textContent = 'delete';
-        b.style.cursor = 'pointer';
-
-        b.addEventListener('click', () => {
-            if (commentForm.style.display == 'none') {
-                commentForm.style.display = 'block';
-            } else {
-                commentForm.style.display = 'none';
-            }
-        });
-
-        del.addEventListener('click', () => {
-            fetch(`http://127.0.0.1:5000/api/v1/${comment.user_id}/comments/${comment.id}`, {
-                    method: 'DELETE',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${user.auth_token}`,
-                    }
-                })
-                .then(res => {
-                        return res.json();
-                    },
-                    networkError => console.log(networkError)
-                ).then(jsonResponse => {
-                    console.log(jsonResponse);
-                    let parent = del.parentElement.parentElement;
-                    let child = del.parentElement;
-                    parent.removeChild(child);
-                });
-        });
-        contentDiv.appendChild(del);
+        }
     }
 }
 
 socket.on('newComment', (comment) => {
-    commentHandler(comment);
-    console.log('New comment!', comment)
+    commentHelper(comment);
+    console.log('New comment!', comment);
 });
 
+socket.on('deletedComment', (comment) => {
+    console.log('Comment deleted');
+    console.log(comment);
+    document.location.reload()
+});
 
 // fetch comments
 
 if (post) {
-    fetch(`http://127.0.0.1:5000/api/v1/${id}/comments`)
+    fetch(`http://127.0.0.1:5000/api/v1/${user.post}/comments`)
         .then(res => {
                 return res.json();
             },
@@ -136,7 +97,7 @@ if (post) {
 
             if (jsonResponse.comments) {
                 jsonResponse.comments.forEach(comment => {
-                    commentHandler(comment)
+                    commentHelper(comment);
                 });
             }
             console.log(jsonResponse)
@@ -147,61 +108,49 @@ if (post) {
 
 const commentForm = document.getElementById('comment_form');
 
-commentForm.addEventListener('submit', (e) => {
-    e.preventDefault();
+socket.on('connect', () => {
+    commentForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+    
+        const formData = new FormData(commentForm);
+        let span = document.getElementById('span');
+    
+        if (formData.get('comment')) {
+    
+            span.innerHTML = ''
+    
+            let comment = {
+                "comment": formData.get('comment')
+            };
 
-    const formData = new FormData(commentForm);
-    let span = document.getElementById('span');
+            let newComment = {
+                comment: comment.comment,
+                username: username
 
-    if (formData.get('comment')) {
+            }
 
-        span.innerHTML = ''
-
-        const comment = {
-            "comment": formData.get('comment')
-        };
-        commentForm.reset();
-        const commentUrl = window.location.href; // url
-
-        if (commentUrl.includes('username')) {
-            const params = new URLSearchParams(window.location.search);
-            let username = params.get('username');
-            let user = JSON.parse(localStorage.getItem(username)); // Local storage key
-
-            fetch(`http://127.0.0.1:5000/api/v1/${user.id}/${id}/comments`, {
+            commentForm.reset();
+    
+            fetch(`http://127.0.0.1:5000/api/v1/${user.id}/${user.post}/comments`, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(comment),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${user.auth_token}`,
-                    'Access-Control-Allow-Credentials': true
+                    'Authorization': `Bearer ${user.auth_token}`
                 }
             }).then(res => {
                     return res.json()
                 },
                 networkError => console.log(networkError.message)
             ).then(jsonResponse => {
-                let now = new Date().getHours();
-                socket.emit('createComment', comment)
-                let diff = now - user.timestamp;
-                if (diff >= 24) {
-                    localStorage.removeItem(`${jsonResponse.email}`);
-                    window.location.href('http://127.0.0.1:3000/login.html');
-                } else {
-                    console.log('Token is valid!')
-                    console.log(jsonResponse)
-                }
+                console.log(jsonResponse)
+                document.location.reload()
+                socket.emit('createComment', newComment)
             });
         } else {
-            window.location.href = "http://127.0.0.1:3000/login.html"
+            let b = `<b style='color:red;'>Please add a comment!</b>`;
+            span.innerHTML = b;
         }
-    } else {
-        let b = document.createElement('b');
-
-        b.textContent = 'Please add a comment!'
-        b.style.color = 'red';
-        span.innerHTML = '';
-        span.appendChild(b)
-    }
+    });
 });

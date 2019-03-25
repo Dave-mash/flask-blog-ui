@@ -6,7 +6,9 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "dev": "nodemon --exec babel-node server/server.js",
-    "build": "npx babel public --watch --out-dir lib"
+    "build": "npx babel public --watch --out-dir lib",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/Dave-mash/flask-blog-ui/issues"
   },
-  "homepage": "https://github.com/Dave-mash/flask-blog-ui#readme",
+  "homepage": "https://dave-mash.github.io/flask-blog-ui/public/index.html",
   "dependencies": {
     "express": "^4.16.4",
     "socket.io": "^2.2.0"
@@ -28,6 +30,7 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.2",
     "eslint": "^5.15.3",
+    "gh-pages": "^2.0.1",
     "nodemon": "^1.18.10"
   }
 }

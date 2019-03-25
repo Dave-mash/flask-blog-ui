@@ -1,17 +1,10 @@
 // user log in event
 
 const form = document.getElementById('login-form')
-const loginUrl = 'https://flask-blog-api.herokuapp.com/api/v1/auth/login';
+const loginUrl = 'http://127.0.0.1:5000/api/v1/auth/login'; // 'https://flask-blog-api.herokuapp.com/api/v1/auth/login';
 
 let span = document.getElementById('error_span')
-let b = document.createElement('b')
 
-const setCookie = (cname, cvalue, exdays) => {
-    let d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = `${cname}=${JSON.stringify(cvalue)}; ${expires}; path=/;`;
-}
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -79,7 +72,7 @@ form.addEventListener('submit', (e) => {
                 auth_token: jsonResponse.auth_token,
                 username: jsonResponse.username
             }
-            setCookie(jsonResponse.username, details, 1)
+            setCookie(jsonResponse.username, JSON.stringify(details), 1);
             if (!document.referrer.includes('username')) {
                 window.location.replace('http://127.0.0.1:3000/index.html?username=' + jsonResponse.username);
             } else {
