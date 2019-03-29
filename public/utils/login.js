@@ -3,7 +3,7 @@
 const form = document.getElementById('login-form')
 
 const loginUrl = URL === `${fetchUrl}/auth/login`;
-
+console.log(loginUrl);
 let span = document.getElementById('error_span')
 
 
