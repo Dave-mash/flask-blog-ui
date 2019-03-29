@@ -1,9 +1,8 @@
 // user log in event
 
-const form = document.getElementById('login-form')
-const loginUrl = 'http://127.0.0.1:5000/api/v1/auth/login'; // 'https://flask-blog-api.herokuapp.com/api/v1/auth/login';
-
-let span = document.getElementById('error_span')
+let span = document.getElementById('error_span');
+const form = document.getElementById('login-form');
+const loginUrl = window.location.hostname === 'localhost' ? 'http://127.0.0.1:3000/auth/login' : 'https://flask-blogify.herokuapp.com/auth/login';
 
 
 form.addEventListener('submit', (e) => {

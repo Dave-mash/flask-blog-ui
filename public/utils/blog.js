@@ -1,8 +1,7 @@
 const mainDiv = document.querySelector('.post_container');
 const socket = io();
 const fetchUrl = 'https://flask-blog-api.herokuapp.com/api/v1';
-const serverUrl = 'https://flask-blog-app-ui.herokuapp.com';
-
+const URL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:3000' : 'https://flask-blogify.herokuapp.com';
 
 const postsHandler = (post) => {
     let postDiv = `
@@ -28,7 +27,7 @@ const postsHandler = (post) => {
             let user = JSON.parse(getCookie(username));
             user['post'] = post['id'];
             setCookie(username, JSON.stringify(user), 1);
-            window.location.href = `${serverUrl}/comment.html?username=${username}&post=${post['title']}&body=${post['body']}`;
+            window.location.href = `${URL}/comment.html?username=${username}&post=${post['title']}&body=${post['body']}`;
         } else {
             let span = document.getElementById('login_prompt');
             span.innerHTML = '';
@@ -83,7 +82,7 @@ profile.addEventListener('click', () => {
     let span = document.getElementById('login_prompt');
     if (myParams) {
         span.innerHTML = '';
-        window.location.href = `${serverUrl}/profile.html?username=${myParams}`;
+        window.location.href = `${URL}/profile.html?username=${myParams}`;
     } else {
         span.textContent = 'Please log in first to access your profile page!';
         span.style.color = 'red';
@@ -98,9 +97,9 @@ home.addEventListener('click', () => {
     let span = document.getElementById('login_prompt');
     if (myParams) {
         span.innerHTML = '';
-        window.location.href = `${serverUrl}/index.html?username=${myParams}`;
+        window.location.href = `${URL}/index.html?username=${myParams}`;
     } else {
-        window.location.href = `${serverUrl}/index.html`;
+        window.location.href = `${URL}/index.html`;
     }
 });
 
@@ -131,11 +130,11 @@ log.addEventListener('click', (e) => {
             .then(jsonResponse => {
                 console.log(jsonResponse);
                 document.cookie = `${myParams}=${JSON.stringify(storedUser)}; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/`
-                window.location.replace(`${serverUrl}/index.html`);
+                window.location.replace(`${URL}/index.html`);
                 console.log(document.cookie)
             });
     } else if (log.textContent == 'login') {
-        window.location.href = `${serverUrl}/login.html`;
+        window.location.href = `${URL}/login.html`;
     }
 });
 

@@ -3,6 +3,8 @@ const post = commentParams.get('post');
 const bodyText = commentParams.get('body');
 const username = commentParams.get('username');
 let user = JSON.parse(getCookie(username))
+const URL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:3000' : 'https://flask-blogify.herokuapp.com';
+
 console.log(user)
 const socket = io();
 
@@ -89,9 +91,9 @@ if (post) {
             home.addEventListener('click', () => {
                 if (window.location.href.includes('username')) {
                     const username = commentParams.get('username');
-                    window.location.href = `http://127.0.0.1:3000/index.html?username=` + username;
+                    window.location.href = `${URL}/index.html?username=` + username;
                 } else {
-                    window.location.href = `http://127.0.0.1:3000/index.html`;
+                    window.location.href = `${URL}/index.html`;
                 }
             });
 

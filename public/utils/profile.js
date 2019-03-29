@@ -3,6 +3,7 @@ const socket = io();
 const userDetails = document.querySelector('.user_details');
 const fetchUrl = 'http://127.0.0.1:5000/api/v1';
 let edit_form = document.getElementById('edit_account_form');
+const URL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:3000' : 'https://flask-blogify.herokuapp.com';
 
 
 let profileUrlParams = new URLSearchParams(window.location.search);
@@ -27,7 +28,7 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
         let home = document.getElementById('home_id');
         
         home.addEventListener('click', () => {
-            window.location.href = `http://127.0.0.1:3000/index.html?username=${username}`;
+            window.location.href = `${URL}/index.html?username=${username}`;
         });
 
         let details = `
