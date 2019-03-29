@@ -43,6 +43,7 @@ socket.on('disconnect', () => {
 
 socket.on('newPost', (post) => {
     postsHandler(post);
+    document.location.reload()
     console.log('New post!', post)
 });
 

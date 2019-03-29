@@ -39,13 +39,14 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
         let posts = document.querySelector('.posts');
         jsonResponse.posts.forEach(post => {
             let postDetails = `
-                <div class='post_details'>
-                    <b style='cursor:pointer;' class='post_title'>${post.title}</b>
-                    <i class='timestamp'>${post.createdAt}</i>
-                    <button class='delete_btn'>delete</button>
-                </div>
-            `
-            posts.innerHTML = postDetails;
+                <b style='cursor:pointer;' class='post_title'>${post.title}</b>
+                <i class='timestamp'>${post.createdAt}</i>
+                <button class='delete_btn'>delete</button>
+            `;
+            let postItem = document.createElement('div');
+            postItem.className = 'post_details';
+            postItem.innerHTML = postDetails;
+            posts.insertBefore(postItem, posts.childNodes[0]);
 
             // const formData = new FormData(form);
             // const first_name = formData.get('first_name');
