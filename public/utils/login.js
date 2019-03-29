@@ -80,7 +80,7 @@ form.addEventListener('submit', (e) => {
                 }
                 setCookie(jsonResponse.username, JSON.stringify(details), 1);
                 if (!document.referrer.includes('username')) {
-                    window.location.replace(`${serverUrl}/index.html?username` + jsonResponse.username);
+                    window.location.replace(`${serverUrl}/index.html?username=` + jsonResponse.username);
                 } else {
                     window.location.href = document.referrer;
                     console.log(window.location.href);
