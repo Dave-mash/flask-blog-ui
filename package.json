@@ -2,7 +2,10 @@
   "name": "flask-blog-ui",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "engines": {
+    "node": ">=8.10.0",
+    "npm": ">=6.8.0"
+  },
   "scripts": {
     "start": "nodemon server/server.js",
     "dev": "nodemon --exec babel-node server/server.js",
