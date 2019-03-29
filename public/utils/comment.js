@@ -2,8 +2,7 @@ let commentParams = new URLSearchParams(window.location.search);
 const post = commentParams.get('post');
 const bodyText = commentParams.get('body');
 const username = commentParams.get('username');
-let user = JSON.parse(getCookie(username))
-const URL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:3000' : 'https://flask-blogify.herokuapp.com';
+let user = JSON.parse(getCookie(username));
 
 console.log(user)
 const socket = io();
@@ -36,7 +35,7 @@ const commentHelper = (comment) => {
         if (delBtn) {
             delBtn.addEventListener('click', () => {
                 console.log('clicked')
-                fetch(`http://127.0.0.1:5000/api/v1/${comment.user_id}/${comment.post_id}/comments/${comment.id}`, {
+                fetch(`${fetchUrl}/${comment.user_id}/${comment.post_id}/comments/${comment.id}`, {
                         method: 'DELETE',
                         mode: 'cors',
                         headers: {
@@ -75,7 +74,7 @@ socket.on('deletedComment', (comment) => {
 // fetch comments
 
 if (post) {
-    fetch(`http://127.0.0.1:5000/api/v1/${user.post}/comments`)
+    fetch(`${fetchUrl}/${user.post}/comments`)
         .then(res => {
                 return res.json();
             },
@@ -91,9 +90,9 @@ if (post) {
             home.addEventListener('click', () => {
                 if (window.location.href.includes('username')) {
                     const username = commentParams.get('username');
-                    window.location.href = `${URL}/index.html?username=` + username;
+                    window.location.href = `${serverUrl}/index.html?username=` + username;
                 } else {
-                    window.location.href = `${URL}/index.html`;
+                    window.location.href = `${serverUrl}/index.html`;
                 }
             });
 
@@ -133,7 +132,7 @@ socket.on('connect', () => {
 
             commentForm.reset();
     
-            fetch(`http://127.0.0.1:5000/api/v1/${user.id}/${user.post}/comments`, {
+            fetch(`${fetchUrl}/${user.id}/${user.post}/comments`, {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify(comment),

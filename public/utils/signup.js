@@ -2,8 +2,7 @@
 
 const form = document.getElementById('signup_form')
 console.log(form)
-const userUrl = 'http://127.0.0.1:5000/api/v1/auth/signup';
-const URL = window.location.hostname === 'localhost' ? 'http://127.0.0.1:3000' : 'https://flask-blogify.herokuapp.com';
+const userUrl = `${fetchUrl}/auth/signup`;
 
 let span = document.getElementById('error_span');
 
@@ -48,7 +47,7 @@ form.addEventListener('submit', (e) => {
                 let b = `<b class="error_message" style="color:red;">${value}</b>`;
                 document.getElementById('error_span').innerHTML = b;
             } else {
-                window.location.replace(`${URL}/login.html`);
+                window.location.replace(`${serverUrl}/login.html`);
             }
     });
 });
