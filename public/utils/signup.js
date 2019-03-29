@@ -44,7 +44,7 @@ form.addEventListener('submit', (e) => {
         .then(jsonResponse => {
             console.log(jsonResponse.error)
             if (jsonResponse.error) {
-                let b = `<b class="error_message" style="color:red;">${value}</b>`;
+                let b = `<b class="error_message" style="color:red;">${jsonResponse.error}</b>`;
                 document.getElementById('error_span').innerHTML = b;
             } else {
                 window.location.replace(`${serverUrl}/login.html`);
