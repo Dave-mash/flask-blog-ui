@@ -2,11 +2,11 @@
   "name": "flask-blog-ui",
   "version": "1.0.0",
   "description": "",
-  "engines" : { "node" : ">=8.10.0", "npm": "~6.8.0" },
   "scripts": {
     "start": "node server/server.js",
-    "dev": "nodemon server/server.js",
+    "dev": "nodemon server/server.js"
   },
+  "engines" : { "node" : ">=8.10.0", "npm": "~6.8.0" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Dave-mash/flask-blog-ui.git"
