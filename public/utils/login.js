@@ -35,13 +35,7 @@ form.addEventListener('submit', (e) => {
                 'Access-Control-Allow-Credentials': true
             }
         }).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else if (response.status === 404) {
-                let b = `<b class="error_message" style="color:red;">Details not found! Try loggin in.</b>`
-                span.innerHTML = '';
-                span.innerHTML = b;
-            }
+            return response.json();
         }, networkError => console.log(networkError.message))
         .then(jsonResponse => {
             span.innerHTML = '';
