@@ -25,7 +25,7 @@ const postsHandler = (post) => {
             let user = JSON.parse(getCookie(username));
             user['post'] = post['id'];
             setCookie(username, JSON.stringify(user), 1);
-            window.location.href = `${serverUrl}/comment.html?username=${username}&post=${post['title']}&body=${post['body']}`;
+            window.location.href = `${serverUrl}/comment.html?username=${username}`;
         } else {
             let span = document.getElementById('login_prompt');
             span.innerHTML = '';

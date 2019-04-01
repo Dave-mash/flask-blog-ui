@@ -22,9 +22,7 @@ const getCookie = (cname) => {
     return "";
 }
 
-const serverUrl = window.location.hostname === 'localhost' ? 'http://127.0.0.1:3000' : 'https://flask-blogify.herokuapp.com';
-const fetchUrl = window.location.hostname === 'localhost' ? 'http://127.0.0.1:5000/api/v1' : 'https://flask-blog-api.herokuapp.com/api/v1';
+const serverUrl = window.location.hostname === '127.0.0.1' ? 'http://127.0.0.1:3000' : 'https://flask-blogify.herokuapp.com';
+const fetchUrl = window.location.hostname === '127.0.0.1' ? 'http://127.0.0.1:5000/api/v1' : 'https://flask-blog-api.herokuapp.com/api/v1';
 console.log(serverUrl)
 console.log(fetchUrl)
-
-console.log('here')
