@@ -1,3 +1,12 @@
+let blogParams = new URLSearchParams(window.location.search);
+let message = blogParams.get('message');
+let spanMsg = document.getElementById('message');
+
+if (message) {
+    let b = `<b style='color:blue;'>${message}</b>`;
+    spanMsg.innerHTML = b;
+}
+
 const mainDiv = document.querySelector('.post_container');
 const socket = io();
 
