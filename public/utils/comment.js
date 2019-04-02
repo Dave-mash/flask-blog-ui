@@ -143,9 +143,10 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
                     placeholder="body"
                     id="body"
                 >${txtValue}</textarea><br>
-                <button id='editBtn'>update</button>
+                <button id='editBtn'>submit</button>
             `;
             let postFormDiv = document.createElement('form');
+            postFormDiv.style.display = 'none';
             postFormDiv.name = 'edit_post_form';
             postFormDiv.id = 'edit_post_form';
 
@@ -269,87 +270,3 @@ socket.on('connect', () => {
         }
     });
 });
-
-
-
-/*
-// posts
-        let posts = document.querySelector('.posts');
-        jsonResponse.posts.forEach(post => {
-            let postDetails = `
-                <b style='cursor:pointer;' class='post_title'>${post.title}</b>
-                <i class='timestamp'>${post.createdAt}</i>
-                <button class='delete_btn'>delete</button>
-            `;
-            let postItem = document.createElement('div');
-            postItem.className = 'post_details';
-            postItem.innerHTML = postDetails;
-            posts.insertBefore(postItem, posts.childNodes[0]);
-
-            // const formData = new FormData(form);
-            // const first_name = formData.get('first_name');
-            // const last_name = formData.get('last_name');
-            // const email = formData.get('email');
-            // const username = formData.get('username');
-            // const password = formData.get('password');
-            // const confirm_password = formData.get('confirm_password');
-
-            // const user = {
-            //     first_name,
-            //     last_name,
-            //     email,
-            //     username,
-            //     password,
-            //     image
-            // };
-
-            edit_form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                fetch(`${fetchUrl}/profile/${store.id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify(post),
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${store.auth_token}`
-                    }
-                })
-                .then(res => {
-                    console.log(store.auth_token)
-                    console.log(res)
-                    return res.json();
-                },
-                networkError => console.log(networkError)
-                ).then(jsonResponse => {
-                    console.log(jsonResponse);
-                });
-            });
-
-            let del = document.querySelector('.delete_btn');
-            console.log(del.parentElement.parentElement)
-
-            del.addEventListener('click', () => {
-                fetch(`${fetchUrl}/${store.id}/posts/${post.id}`, {
-                        method: 'DELETE',
-                        mode: 'cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${store.auth_token}`
-                        }
-                    })
-                    .then(res => {
-                            console.log(store.auth_token)
-                            console.log(res)
-                            return res.json();
-                        },
-                        networkError => console.log(networkError)
-                    ).then(jsonResponse => {
-                        let parent = del.parentElement.parentElement;
-                        let child = del.parentElement;
-                        parent.removeChild(child);
-                        socket.emit('deletePost');
-                    });
-            });
-        });
-        console.log(jsonResponse);
-*/

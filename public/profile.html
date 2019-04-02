@@ -10,24 +10,8 @@
     <h2>Profile page</h2>
     <div class="container">
         <h2 id="home_id" style="cursor:pointer;">Home</h2>
+        <i id="edit_button">Edit account!</i>
         <div class="user_details"></div>
-        <a href=""><i id="edit_button">Edit account!</i></a>
-        <form id="edit_account_form">
-            <label for="email">Email</label>
-            <input type="email" required><br>
-            <label for="username">Username</label>
-            <input type="text" required><br>
-            <label for="password">Password</label>
-            <input type="password" required><br>
-            <label for="confirm_password">Confirm password</label>
-            <input type="password" required><br>
-            <button>Update</button>
-        </form>
-        <div class="my_posts">
-            <h3 class="title_header">My posts</h3>
-            <p>click on post to edit</p>
-            <div class="posts"></div>
-        </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./utils/utils.js"></script>
