@@ -1,0 +1,58 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+h1 {
+    margin: 0.8% 2%;
+}
+
+header {
+    background: rgba(10, 10, 44, 0.651);
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav_bar_section {
+    display: flex;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav_bar_section h2 {
+    margin: 0 5%;
+    opacity: .9;
+    font-size: 20px;
+}
+
+.nav_bar_section h2:hover {
+    opacity: 1;
+}
+
+a, #topic_id {
+    cursor: pointer;
+}
+
+.container-wrapper {
+    display: flex;
+    justify-content: center;
+    background: red;
+}
+
+.container {
+    flex: 60%;
+    background: blue;
+    text-align: center;
+}
+
+.post_blog_form {
+    flex: 30%;
+    text-align: center;
+    background: green;
+}
+
+#author_name {
+    color: rgba(10, 10, 44, 0.651);
+}

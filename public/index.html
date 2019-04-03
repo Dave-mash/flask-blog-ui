@@ -5,34 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <style>
-        a, #topic_id {
-            cursor: pointer;
-        }
-        #author_name {
-            color: blue;
-        }
-        
-    </style>
+    <link rel="stylesheet" href="./css/index.css">
     <title>Flask Blog</title>
 </head>
 
 <body>
     <header>
-        <span id="login_prompt"></span>
-        <span id="message"></span>
-        <h2 id="home"><a id="home_anchor_tag">Home</a></h2>
-        <h2 id="profile"><a id="profile_anchor_tag">Profile</a></h2>
-        <h2 id="h2"><a id="log_state"></a></h2>
+        <h1>Blogify</h1>
+        <div class="nav_bar_section">
+            <h2 id="home"><a id="home_anchor_tag">Home</a></h2>
+            <h2 id="profile"><a id="profile_anchor_tag">Profile</a></h2>
+            <h2 id="h2"><a id="log_state"></a></h2>
+        </div>
     </header>
-    <div class="container">
-        <div class="post_container"></div>
-        <form id="post_form">
-            <input type="text" name="title" placeholder="title" id="post_title"><br />
-            <textarea name="textarea" placeholder="body" id="post_body" cols="25" rows="8"></textarea>
-            <button>Post</button>
-        </form>
-        <span id="span"></span>
+    <div class="container-wrapper">
+        <div class="container">
+            <div class="span_message">
+                <span id="login_prompt"></span>
+                <span id="message"></span>
+            </div>
+            <div class="post_container"></div>
+        </div>
+        <div class="post_blog_form">
+            <button>Post form</button>
+            <form id="post_form">
+                <input type="text" name="title" placeholder="title" id="post_title"><br />
+                <textarea name="textarea" placeholder="body" id="post_body" cols="25" rows="8"></textarea>
+                <button>Post</button>
+            </form>
+            <span id="span"></span>
+        </div>
     </div>
 
     <script src="/socket.io/socket.io.js"></script>

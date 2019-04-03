@@ -30,6 +30,7 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
         let details = `
             <h3>${jsonResponse.user.username}</h3>
             <img id='img' src='../images/${jsonResponse.user.image}' style='width:100px;length:100px;'/><br />
+            <input type='file' capture/>
             <form name="update_user_form" id="update_user_form">
                 <input id='first_name' type='text' value=${jsonResponse.user.first_name} required/><br />
                 <input id='last_name' type='text' value=${jsonResponse.user.last_name} required/><br />
@@ -57,9 +58,9 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
             "username": userName.value,
             "password": 'old',
             "confirm_password": 'new',
-            "image": img.getAttribute('src')
+            "image": "user.png"
         }
-        console.log(updatedObj)
+        console.log(updatedObj['image'])
 
         fName.addEventListener('change', (e) => { updatedObj['first_name'] = e.target.value; });
         lName.addEventListener('change', (e) => { updatedObj['last_name'] = e.target.value; });
