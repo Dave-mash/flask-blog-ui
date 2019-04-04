@@ -1,12 +1,16 @@
 let blogParams = new URLSearchParams(window.location.search);
-let message = blogParams.get('message');
 let spanMsg = document.getElementById('message');
+console.log(message);
 
 if (message) {
-    let b = `<b style='color:blue;'>${message}</b>`;
+    let spanDiv = document.querySelector('.span_div');
+    spanDiv.classList = 'span_message';
+    let b = `<b style='color:dodgerblue;'>${message}</b>`;
+    let span = document.getElementById('message');
     spanMsg.innerHTML = b;
+    span.style.background = '#5F5F75';
     setTimeout(() => {
-        spanMsg.innerHTML = '';
+        span.style.display = 'none';
     }, 5000);
 }
 
@@ -15,18 +19,30 @@ const socket = io();
 
 const postsHandler = (post) => {
     let postDiv = `
-        <h3 id="topic_id"><i id="author_name">${post['author']}: </i><b class="post_comment">${post['title']}</b></h3>
-        <p>${post['body']}</p>
-        <b>${new Date(post.createdOn).toString().split(' G')[0]}</b>
+        <div class="profile_photo">
+            <img src="../images/user.png"/>
+        </div>
+        <div class="post_item">
+            <span class="post_span">
+                <h3 id="topic_id">${post['author']}</h3>
+                <i id="timestamp">${new Date(post.createdOn).toString().split(' G')[0]}</i>
+            </span>
+            <div class="post_item_details">
+                <div class="post_item_wrapped">
+                    <b class="post_title">${post['title']}</b>
+                    <p id="post_body">${post['body']}</p>
+                </div>
+            </div>
+        </div>
     `;
 
     let postItem = document.createElement('div');
-    postItem.className = 'post_item';
+    postItem.className = 'post_item_div';
     postItem.innerHTML = postDiv;
 
     mainDiv.insertBefore(postItem, mainDiv.childNodes[0]);
 
-    let postComment = document.querySelector('.post_comment');
+    let postComment = document.querySelector('.post_title');
 
     postComment.addEventListener('click', () => {
         console.log('clicked');
@@ -74,9 +90,12 @@ fetch(`${fetchUrl}/posts`)
         },
         networkError => console.log(networkError.message))
     .then(jsonResponse => {
-        let a = document.getElementById('log_state');
-        a.textContent = window.location.search ? 'logout' : 'login';
-        a.style.cursor = 'pointer';
+        let reg = document.getElementById('register_state');
+        if (window.location.search) {
+            reg.style.display = 'none';
+        } else {
+            reg.style.display = 'block';
+        }
         mainDiv.innerHTML = '';
         jsonResponse['posts'].forEach(post => {
             postsHandler(post);
@@ -115,40 +134,6 @@ home.addEventListener('click', () => {
 });
 
 
-const log = document.getElementById('log_state');
-
-log.addEventListener('click', (e) => {
-    if (log.textContent == 'logout') {
-        console.log(log)
-        let blogParams = new URLSearchParams(window.location.search);
-        let myParams = blogParams.get('username');
-        let storedUser = JSON.parse(getCookie(myParams));
-
-        console.log(storedUser)
-
-        fetch(`${fetchUrl}/auth/${storedUser.id}/logout`, {
-                method: 'POST',
-                mode: 'cors',
-                headers: {
-                    'Authorization': `Bearer ${storedUser.auth_token}`
-                }
-            })
-            .then(res => {
-                    console.log(res)
-                    return res.json()
-                },
-                networkError => console.log(networkError.message))
-            .then(jsonResponse => {
-                console.log(jsonResponse);
-                document.cookie = `${myParams}=${JSON.stringify(storedUser)}; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/`
-                window.location.replace(`${serverUrl}/index.html`);
-                console.log(document.cookie)
-            });
-    } else if (log.textContent == 'login') {
-        window.location.href = `${serverUrl}/login.html`;
-    }
-});
-
 const form = document.getElementById('post_form');
 
 
@@ -179,7 +164,8 @@ socket.on('connect', () => {
 
             if (title && body) {
 
-                span.innerHTML = ''
+                span.innerHTML = '';
+                span.style.display = 'none';
                 /* grabbing items from the url */
 
                 let post = {
@@ -215,7 +201,7 @@ socket.on('connect', () => {
 
                 const error = (text) => {
                     span.innerHTML = '';
-                    let b = `<b style="color:red;">${text}</b>`;
+                    let b = `<b id="error_b">${text}</b>`;
                     span.innerHTML = b;
                 }
 

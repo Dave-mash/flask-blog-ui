@@ -5,16 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/profile.css">
     <link rel="stylesheet" href="./css/index.css">
     <title>Flask Blog</title>
 </head>
 
 <body>
-    <h2>Profile page</h2>
-    <div class="container">
+    <header>
+        <div class="left_nav">
+            <h1>Blogify</h1>
+            <h2 id="home_id" class="inactive"><a id="home_anchor_tag">Home</a></h2>
+            <h2 id="profile"><a id="profile_anchor_tag">Profile</a></h2>
+        </div>
         <div class="nav_bar_section">
-            <h2 id="home_id" style="cursor:pointer;">Home</h2>
-            <i id="edit_button">Edit account!</i>
+            <h2 id="h2" class="inactive"><a id="log_state"></a></h2>
+        </div>
+    </header>
+    <div class="container">
+        <div class="user_details_section">
             <div class="user_details"></div>
         </div>
     </div>

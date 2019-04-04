@@ -11,29 +11,33 @@
 
 <body>
     <header>
-        <h1>Blogify</h1>
-        <div class="nav_bar_section">
+        <div class="left_nav">
+            <h1>Blogify</h1>
             <h2 id="home"><a id="home_anchor_tag">Home</a></h2>
-            <h2 id="profile"><a id="profile_anchor_tag">Profile</a></h2>
-            <h2 id="h2"><a id="log_state"></a></h2>
+            <h2 id="profile" class="inactive"><a id="profile_anchor_tag">Profile</a></h2>
+        </div>
+        <div class="nav_bar_section">
+            <h2 id="h2" class="inactive"><a id="register_state" href="signup.html">Register</a></h2>
+            <h2 id="h2" class="inactive"><a id="log_state"></a></h2>
         </div>
     </header>
     <div class="container-wrapper">
         <div class="container">
-            <div class="span_message">
+            <div class="span_div">
                 <span id="login_prompt"></span>
                 <span id="message"></span>
             </div>
             <div class="post_container"></div>
         </div>
         <div class="post_blog_form">
-            <button>Post form</button>
-            <form id="post_form">
-                <input type="text" name="title" placeholder="title" id="post_title"><br />
-                <textarea name="textarea" placeholder="body" id="post_body" cols="25" rows="8"></textarea>
-                <button>Post</button>
-            </form>
-            <span id="span"></span>
+            <div class="post_form_area">
+                <span id="span"></span>
+                <form id="post_form">
+                    <input type="text" name="title" placeholder="title" id="post_title"><br />
+                    <textarea name="textarea" placeholder="body" id="post_body" cols="25" rows="8"></textarea><br/>
+                    <button id="submit_post_btn">Post</button>
+                </form>
+            </div>
         </div>
     </div>
 

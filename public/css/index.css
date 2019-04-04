@@ -4,7 +4,7 @@ body {
 }
 
 h1 {
-    margin: 0.8% 2%;
+    margin: 3% 20%;
 }
 
 header {
@@ -13,6 +13,34 @@ header {
     display: flex;
     justify-content: space-between;
 }
+
+.left_nav {
+    display: flex;
+    align-items: center;
+}
+
+.left_nav h2 {
+    margin: 0 20px;
+    font-size: 20px;
+}
+
+a {
+    text-decoration: none;
+    font-weight: 400;
+    color: #fff;
+}
+
+.inactive {
+    opacity: .6;
+}
+
+#h2:hover, #home_id:hover, #profile:hover {
+    opacity: 1;
+}
+
+/* #register_state {
+    color: #fff;
+} */
 
 .nav_bar_section {
     display: flex;
@@ -31,28 +59,155 @@ header {
     opacity: 1;
 }
 
-a, #topic_id {
+a, #topic_id, .post_title, button {
     cursor: pointer;
 }
 
 .container-wrapper {
     display: flex;
     justify-content: center;
-    background: red;
+    margin-top: 20px;
 }
 
 .container {
     flex: 60%;
-    background: blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.span_message {
+    box-sizing: border-box;
+    width: 80%;
     text-align: center;
+    padding: 15px;
+    font-size: 20px;
+    margin-bottom: 20px;
+    border-radius: 2px;
 }
 
 .post_blog_form {
-    flex: 30%;
+    flex: 40%;
     text-align: center;
-    background: green;
+    margin-top: 40px;
 }
 
-#author_name {
+.post_form_area {
+    text-align: left;
+    width: 60%;
+    opacity: .8;
+    transition: 0.5s ease-in-out;
+}
+
+.post_form_area button, .post_form_area input, .post_form_area textarea {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.post_form_area input, .post_form_area textarea {
+    padding: 10px;
+    font-size: 17px;
+}
+
+.post_form_area button {
+    padding: 10px;
+    font-size: 20px;
+    background: #5F5F75;
+    color: #fff;
+    border: 1px solid rgb(67, 67, 78);
+    border-radius: 2px;
+}
+
+#span {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+#error_b {
+    color:red;
+}
+
+/* 
+.post_form_area button:hover {
+
+} */
+
+#post_form {
+    /* display: none; */
+}
+
+#submit_post_btn {
+    /* margin: 5px 0; */
+}
+
+.post_span {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    width: 95%;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.post_container {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.post_item_div {
+    display: flex;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.post_item {
+    opacity: .8;
+    width: 100%;
+    flex: 80%;
+}
+
+.profile_photo {
+    flex: 10%;
+    padding-top: 10px;
+    text-align: center;
+}
+
+.profile_photo img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+.post_item_details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post_item_wrapped {
+    width: 95%;
+    font-size: 18px;
+    margin-top: 15px;
+}
+
+#topic_id {
     color: rgba(10, 10, 44, 0.651);
+    margin: 0;
+}
+
+#timestamp {
+    font-size:17px;
+    opacity: .6;
+}
+
+.post_title:hover {
+    text-decoration: underline;
+    opacity: 1;
 }

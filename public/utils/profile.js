@@ -30,7 +30,7 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
         let details = `
             <h3>${jsonResponse.user.username}</h3>
             <img id='img' src='../images/${jsonResponse.user.image}' style='width:100px;length:100px;'/><br />
-            <input type='file' capture/>
+            <input id='profile-pic' type='file' capture/>
             <form name="update_user_form" id="update_user_form">
                 <input id='first_name' type='text' value=${jsonResponse.user.first_name} required/><br />
                 <input id='last_name' type='text' value=${jsonResponse.user.last_name} required/><br />

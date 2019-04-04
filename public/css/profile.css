@@ -1,0 +1,35 @@
+.user_details_section {
+    width: 100%;
+}
+
+.user_details input {
+    width: 90%;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#profile-pic {
+    text-align: center;
+    width: 40%;
+}
+
+.user_details button {
+    width: 90%;
+    padding: 10px;
+    font-size: 20px;
+    background: #5F5F75;
+    border: 1px solid rgb(69, 69, 83);
+    border-radius: 2px;
+    margin-top: 5px;
+}
+
+.user_details {
+    margin: auto;
+    margin-top: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 10px;
+    width: 40%;
+    text-align: center;
+}
