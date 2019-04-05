@@ -14,9 +14,14 @@ const commentHelper = (comment) => {
 
     if (comment.username == username) {
         commentItem = `
-            <b id='author_id'>${comment.username}</b>
-            <p class='comment_text'>${comment.comment}</p>
-            <button id='del'>delete</delete>
+            <div class='img_name'>
+                <img src='../images/user.png' id='user_pic' />
+                <b id='author_id'>${comment.username}</b>
+            </div>
+            <div class='comment_details'>
+                <p class='comment_text'>${comment.comment}</p>
+                <button class='del_btn' id='del'>delete</delete>
+            </div>
         `;
     } else {
         console.log(comment)
@@ -27,12 +32,12 @@ const commentHelper = (comment) => {
     }
     comDiv.innerHTML = commentItem;
     commentDiv.appendChild(comDiv)
-    let delBtn = document.getElementById('del');
     console.log(commentDiv);
+    let delBtn = document.querySelectorAll('.del_btn');
+
     if (delBtn) {
-        console.log(delBtn.parentElement);
-        if (delBtn) {
-            delBtn.addEventListener('click', () => {
+        delBtn.forEach(btn => {
+            btn.addEventListener('click', () => {
                 console.log('clicked')
                 fetch(`${fetchUrl}/${comment.user_id}/${comment.post_id}/comments/${comment.id}`, {
                         method: 'DELETE',
@@ -48,13 +53,13 @@ const commentHelper = (comment) => {
                         networkError => console.log(networkError)
                     ).then(jsonResponse => {
                         console.log(jsonResponse);
-                        let parent = delBtn.parentElement.parentElement;
-                        let child = delBtn.parentElement;
+                        let parent = btn.parentElement.parentElement.parentElement;
+                        let child = btn.parentElement.parentElement;
                         parent.removeChild(child);
-                        socket.emit('removeComment', delBtn)
+                        socket.emit('removeComment', btn)
                     });
             });
-        }
+        });
     }
 }
 

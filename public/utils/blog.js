@@ -104,36 +104,6 @@ fetch(`${fetchUrl}/posts`)
         console.log(jsonResponse)
     });
 
-
-const profile = document.getElementById('profile_anchor_tag');
-profile.addEventListener('click', () => {
-    let profileParams = new URLSearchParams(window.location.search);
-    let myParams = profileParams.get('username');
-    let span = document.getElementById('login_prompt');
-    if (myParams) {
-        span.innerHTML = '';
-        window.location.href = `${serverUrl}/profile.html?username=${myParams}`;
-    } else {
-        span.textContent = 'Please log in first to access your profile page!';
-        span.style.color = 'red';
-    }
-});
-
-
-const home = document.getElementById('home_anchor_tag');
-home.addEventListener('click', () => {
-    let profileParams = new URLSearchParams(window.location.search);
-    let myParams = profileParams.get('username');
-    let span = document.getElementById('login_prompt');
-    if (myParams) {
-        span.innerHTML = '';
-        window.location.href = `${serverUrl}/index.html?username=${myParams}`;
-    } else {
-        window.location.href = `${serverUrl}/index.html`;
-    }
-});
-
-
 const form = document.getElementById('post_form');
 
 

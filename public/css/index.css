@@ -34,13 +34,13 @@ a {
     opacity: .6;
 }
 
-#h2:hover, #home_id:hover, #profile:hover {
+.inactive:hover {
     opacity: 1;
 }
 
-/* #register_state {
-    color: #fff;
-} */
+#h2:hover, #home_id:hover, #profile:hover {
+    opacity: 1;
+}
 
 .nav_bar_section {
     display: flex;
@@ -51,12 +51,7 @@ a {
 
 .nav_bar_section h2 {
     margin: 0 5%;
-    opacity: .9;
     font-size: 20px;
-}
-
-.nav_bar_section h2:hover {
-    opacity: 1;
 }
 
 a, #topic_id, .post_title, button {

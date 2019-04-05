@@ -30,14 +30,15 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
         let details = `
             <h3>${jsonResponse.user.username}</h3>
             <img id='img' src='../images/${jsonResponse.user.image}' style='width:100px;length:100px;'/><br />
+            <i id='edit_account'>Update account</i>
             <input id='profile-pic' type='file' capture/>
             <form name="update_user_form" id="update_user_form">
-                <input id='first_name' type='text' value=${jsonResponse.user.first_name} required/><br />
-                <input id='last_name' type='text' value=${jsonResponse.user.last_name} required/><br />
-                <input id='email' type='email' value=${jsonResponse.user.email} required/><br />
-                <input id='username' type='text' value=${jsonResponse.user.username} required/><br />
-                <input id='new_pass' type='password' placeholder='New password' required/><br />
-                <input id='confirm_pass' type='password' placeholder='Confirm new password' required/><br />
+                <input name='first_name' id='first_name' type='text' value=${jsonResponse.user.first_name} required/><br />
+                <input name='last_name' id='last_name' type='text' value=${jsonResponse.user.last_name} required/><br />
+                <input name='email' id='email' type='email' value=${jsonResponse.user.email} required/><br />
+                <input name='username' id='username' type='text' value=${jsonResponse.user.username} required/><br />
+                <input name='new_pass' id='new_pass' type='password' placeholder='New password' required/><br />
+                <input name='confirm_pass' id='confirm_pass' type='password' placeholder='Confirm new password' required/><br />
                 <button>update</button>
             </form>
         `;

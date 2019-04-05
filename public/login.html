@@ -5,25 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <style>
-        b {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/login.css">
     <title>Flask Blog</title>
 </head>
 
 <body>
+    <header>
+        <div class="left_nav">
+            <h1>Blogify</h1>
+            <h2 id="home" class="inactive"><a id="home_anchor_tag">Home</a></h2>
+            <h2 id="profile" class="inactive"><a id="profile_anchor_tag">Profile</a></h2>
+        </div>
+        <div class="nav_bar_section">
+            <h2 id="h2" class="inactive"><a id="register_state" href="signup.html">Register</a></h2>
+            <h2 id="h2"><a id="log_state"></a></h2>
+        </div>
+    </header>
     <div class="container">
-        <form class="form-details" id="login-form">
-            <label for="email">Email <b>*</b></label>
-            <input name="email" type="email" id="email">
-            <label for="password">Password <b>*</b></label>
-            <input name="password" type="password" id="password">
-            <span id="error_span"></span>
-            <button id="submit">Log in</button>
-            <p id="login_link">Don't have an account? <a href="signup.html">sign up</a> instead</p>
-        </form>
+        <div class="login_form">
+            <span id="login_prompt"></span>
+            <form class="form-details" id="login-form">
+                <label for="email">Email <b>*</b></label>
+                <input name="email" type="email" id="email">
+                <label for="password">Password <b>*</b></label>
+                <input name="password" type="password" id="password">
+                <span id="error_span"></span>
+                <button id="submit">Log in</button>
+                <p id="login_link">Don't have an account? <a href="signup.html">sign up</a> instead</p>
+            </form>
+        </div>
     </div>
     <script src="./utils/utils.js"></script>
     <script src="./utils/login.js"></script>

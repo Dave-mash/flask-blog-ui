@@ -4,37 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <style>
-        .highlighter {
-            border: 1.5px solid red;
-        }
-        .no_highlighter {
-            border: none;
-        }
-        b {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/signup.css">
     <title>Flask Blog</title>
 </head>
 <body>
+    <header>
+        <div class="left_nav">
+            <h1>Blogify</h1>
+            <h2 id="home" class="inactive"><a id="home_anchor_tag">Home</a></h2>
+            <h2 id="profile" class="inactive"><a id="profile_anchor_tag">Profile</a></h2>
+        </div>
+        <div class="nav_bar_section">
+            <h2 id="h2" class='active'><a id="register_state" href="signup.html">Register</a></h2>
+            <h2 id="h2" class="inactive"><a id="log_state"></a></h2>
+        </div>
+    </header>
     <div class="container">
-        <form id="signup_form">
-            <label for="first_name">First name <b>*</b></label>
-            <input name="first_name" id="first_name" type="text" required>
-            <label for="last_name">Last name <b>*</b></label>
-            <input name="last_name" id="last_name" type="text" required>
-            <label for="username">Username <b>*</b></label>
-            <input name="username" id="username" type="text" required>
-            <label for="email">Email <b>*</b></label>
-            <input name="email" id="email" type="email" required>
-            <label for="password">Password <b>*</b></label>
-            <input name="password" id="password" type="password" required>
-            <label for="confirm password">Confirm Password <b>*</b></label>
-            <input name="confirm_password" id="confirm_password" type="password" required>
-            <span id="error_span"></span>
-            <button>Sign Up</button>
-        </form>
+        <div class="form_container">
+            <span id="login_prompt"></span>
+            <form id="signup_form">
+                <label for="first_name">First name <b>*</b></label>
+                <input placeholder="Enter first name" name="first_name" id="first_name" type="text" required>
+                <label for="last_name">Last name <b>*</b></label>
+                <input placeholder="Enter last name" name="last_name" id="last_name" type="text" required>
+                <label for="username">Username <b>*</b></label>
+                <input placeholder="Enter username" name="username" id="username" type="text" required>
+                <label for="email">Email <b>*</b></label>
+                <input placeholder="Enter email" name="email" id="email" type="email" required>
+                <label for="password">Password <b>*</b></label>
+                <input placeholder="Enter password" name="password" id="password" type="password" required>
+                <label for="confirm password">Confirm Password <b>*</b></label>
+                <input placeholder="Confirm password" name="confirm_password" id="confirm_password" type="password" required>
+                <span id="error_span"></span>
+                <button>Sign Up</button>
+                <p id="login_link">Already have an account? <a href="login.html">log in</a> instead</p>
+            </form>
+        </div>
     </div>
     <script src="./utils/utils.js"></script>
     <script src="./utils/signup.js"></script>

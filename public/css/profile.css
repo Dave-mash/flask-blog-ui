@@ -32,4 +32,22 @@
     padding: 10px;
     width: 40%;
     text-align: center;
+    opacity: .8;
+}
+
+#edit_account {
+    display: block;
+    text-decoration: underline;
+}
+
+form {
+    margin-bottom: 10px;
+}
+
+form button {
+    color: #fff;
+}
+
+form input {
+    margin: 5px 0;
 }

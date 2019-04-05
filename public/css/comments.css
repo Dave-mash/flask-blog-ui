@@ -1,0 +1,123 @@
+.container {
+    margin: auto;
+    font-size: 17px;
+    opacity: .9;
+}
+
+.sub_container {
+    margin-top: 20px;
+    width: 70%;
+}
+
+.post_div {
+    margin: auto;
+    width: 90%;
+}
+
+#post_title {
+    text-decoration: underline;
+}
+
+.comments_sec {
+    /* background: blue; */
+    width: 90%;
+    margin: auto;
+}
+
+.img_name {
+    box-sizing: border-box;
+    padding: 10px;
+    /* background: red; */
+    display: flex;
+    flex-direction: column;
+    padding-right: 15px;
+}
+
+#edit_post button {
+    width: 80px;
+    height: 40px;
+    font-size: 16px;
+}
+
+#update_button {
+    background: #fff;
+    border: 1px solid dodgerblue;
+    border-radius: 2px;
+    color: dodgerblue;
+}
+
+#update_button:hover {
+    background: dodgerblue;
+    color: #fff;
+}
+
+#delete_button {
+    background: rgb(209, 3, 3);
+    border: 1px solid red;
+    border-radius: 2px;
+    color: #fff;
+}
+
+#delete_button:hover {
+    background: red;
+}
+
+.comment_item {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.comment_details {
+    box-sizing: border-box;
+    background: rgb(238, 237, 237);
+    border-radius: 2px;
+    padding: 10px;
+}
+
+.comment_details p {
+    margin: 0;
+}
+
+#comment_form {
+    margin-top: 30px;
+}
+
+#del {
+    background: rgb(209, 3, 3);
+    color: #fff;
+    width: 70px;
+    height: 30px;
+    font-size: 16px;
+    border: 1px solid red;
+    border-radius: 2px;
+    margin-top: 10px;
+}
+
+#del:hover {
+    background: red;
+}
+
+#comment_form textarea {
+    width: 40%;
+    height: 80px;
+    font-size: 16px;
+    border-radius: 4px;
+}
+
+#comment_form button {
+    background: #5F5F75;
+    width: 20%;
+    height: 30px;
+    border: 1px solid rgb(84, 84, 121);
+    border-radius: 2px;
+    color: #fff;
+}
+
+#user_pic {
+    width: 50px;
+    height: 50px;
+}
+
+.comments_div h3 {
+    text-decoration: underline;
+}

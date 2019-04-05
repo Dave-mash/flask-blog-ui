@@ -1,0 +1,52 @@
+p a {
+    color: blue;
+    text-decoration: underline;
+}
+
+.container {
+    opacity: .8;
+    height: 100vh;
+    /* background: red; */
+    margin-top: 20px;
+}
+
+label b {
+    color: red;
+}
+
+.form_container {
+    width: 60%;
+    height: 70%;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+form button {
+    width: 30%;
+    margin-top: 10px;
+    height: 40px;
+    border-radius: 2px;
+    background: #5F5F75;
+    color: #fff;
+    border: 1px solid rgb(88, 88, 105);
+    font-size: 18px;
+}
+
+form label {
+    font-size: 17px;
+    padding: 5px;
+}
+
+form input {
+    height: 30px;
+    font-size: 16px;
+    padding: 0 10px;
+}
