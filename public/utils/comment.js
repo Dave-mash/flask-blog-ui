@@ -57,6 +57,8 @@ const commentHelper = (comment) => {
                         let child = btn.parentElement.parentElement;
                         parent.removeChild(child);
                         socket.emit('removeComment', btn)
+                        console.log(parent)
+                        console.log(child)
                     });
             });
         });
@@ -96,9 +98,14 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
         });
 
         const title = document.getElementById('post_title');
+        let span = document.getElementById('edit_post');
+        let i = document.createElement('i');
+        console.log(jsonResponse)
+        i.textContent = ` Written by: ${jsonResponse.post.username}`;
+        i.id = 'writer';
+        span.appendChild(i);
         if (user.id === jsonResponse.post.author_id) {
             console.log('matched')
-            let span = document.getElementById('edit_post');
             let editDetails = document.createElement('div');
             let buttons = `
                 <button id='update_button' style='cursor:pointer'>update</button>
