@@ -20,6 +20,10 @@ label b {
     border-radius: 2px;
 }
 
+.span_div {
+    width: 100%;
+}
+
 form {
     margin: auto;
     display: flex;

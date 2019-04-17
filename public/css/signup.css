@@ -10,6 +10,10 @@ p a {
     margin-top: 20px;
 }
 
+.span_div {
+    width: 100%;
+}
+
 label b {
     color: red;
 }

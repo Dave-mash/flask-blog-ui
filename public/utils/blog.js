@@ -1,18 +1,5 @@
 let blogParams = new URLSearchParams(window.location.search);
-let spanMsg = document.getElementById('message');
-console.log(message);
-
-if (message) {
-    let spanDiv = document.querySelector('.span_div');
-    spanDiv.classList = 'span_message';
-    let b = `<b style='color:dodgerblue;'>${message}</b>`;
-    let span = document.getElementById('message');
-    spanMsg.innerHTML = b;
-    span.style.background = '#5F5F75';
-    setTimeout(() => {
-        span.style.display = 'none';
-    }, 5000);
-}
+console.log(message)
 
 const mainDiv = document.querySelector('.post_container');
 const socket = io();
@@ -20,7 +7,7 @@ const socket = io();
 const postsHandler = (post) => {
     let postDiv = `
         <div class="profile_photo">
-            <img src="../images/user.png"/>
+            <img src="../images/${post['photo']}"/>
         </div>
         <div class="post_item">
             <span class="post_span">
@@ -55,10 +42,7 @@ const postsHandler = (post) => {
             setCookie(username, JSON.stringify(user), 1);
             window.location.href = `${serverUrl}/comment.html?username=${username}`;
         } else {
-            let span = document.getElementById('login_prompt');
-            span.innerHTML = '';
-            span.textContent = 'Please log in first!';
-            span.style.color = 'red';
+            displayError('Please log in first!', 'red');
         }
     });
 }
@@ -125,9 +109,7 @@ socket.on('connect', () => {
 
         if (!username) {
             console.log('log in first')
-            span.innerHTML = '';
-            let b = '<b style="color:red;">You are not logged in!</b>';
-            span.innerHTML = b;
+            displayError('You are not logged in!', 'red');
         } else {
 
             username = JSON.parse(username);
@@ -159,29 +141,14 @@ socket.on('connect', () => {
                     networkError => console.log(networkError.message)
                 ).then(jsonResponse => {
                     console.log(jsonResponse);
-                    if (jsonResponse.error) {
-                        span.innerHTML = '';
-                        let b = `<p style="color:red;">${jsonResponse.error}</p>`;
-                        span.innerHTML = b;
+                    if (jsonResponse['message']) {
+                        displayError(jsonResponse['message'], 'dodgerblue');
+                        socket.emit('createPost', post);
+                        form.reset();
+                    } else if (jsonResponse['error']) {
+                        displayError(jsonResponse['error'], 'red');
                     }
-                    socket.emit('createPost', post);
-                    form.reset();
                 });
-            } else {
-
-                const error = (text) => {
-                    span.innerHTML = '';
-                    let b = `<b id="error_b">${text}</b>`;
-                    span.innerHTML = b;
-                }
-
-                if (!title && body) {
-                    error('Please provide a title!');
-                } else if (title && !body) {
-                    error('Please provide a body!');
-                } else if (!title && !body) {
-                    error('Please provide a title and a body!');
-                }
             }
         }
     });

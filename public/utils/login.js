@@ -38,34 +38,7 @@ form.addEventListener('submit', (e) => {
             return response.json();
         }, networkError => console.log(networkError.message))
         .then(jsonResponse => {
-            span.innerHTML = '';
-            let emailInput = document.getElementById(`email`)
-            let passwordInput = document.getElementById(`password`)
 
-            if (!email) {
-                let b = `<b class="error_message" style="color:red;">Email is required!</b>`
-                span.innerHTML = b
-                emailInput.style.border = '1.8px solid red'
-            } else if (!password) {
-                let b = `<b class="error_message" style="color:red;">Password is required!</b>`
-                span.innerHTML = b
-                passwordInput.style.border = '1.8px solid red'
-            } else {
-                span.innerHTML = '';
-                passwordInput.style.border = 'none'
-                emailInput.style.border = 'none'
-            }
-
-            if (span.children.length == 0) {
-                console.log(jsonResponse)
-                if (jsonResponse.error) {
-                    let b = `<b class="error_message" style="color:red;">${jsonResponse.error}</b>`
-                    document.getElementById('error_span').innerHTML = b
-                } else {
-                    document.getElementById('error_span').innerHTML = ''
-                }
-                console.log(jsonResponse.error)
-            }
             if (!jsonResponse.error) {
                 let details = {
                     id: jsonResponse.id,
@@ -79,6 +52,9 @@ form.addEventListener('submit', (e) => {
                     window.location.href = document.referrer;
                     console.log(window.location.href);
                 }
+                displayError(jsonResponse.message, 'dodgerblue');
+            } else {
+                displayError(jsonResponse.error, 'red');                
             }
         });
 });

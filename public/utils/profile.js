@@ -6,6 +6,8 @@ let profileUrlParams = new URLSearchParams(window.location.search);
 let username = profileUrlParams.get('username');
 let store = JSON.parse(getCookie(username));
 
+// displayError(errors, 'red');
+
 // user's posts
 fetch(`${fetchUrl}/profile/${store.id}`, {
         method: 'GET',
@@ -29,7 +31,7 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
 
         let details = `
             <h3>${jsonResponse.user.username}</h3>
-            <img id='img' src='../images/${jsonResponse.user.image}' style='width:100px;length:100px;'/><br />
+            <img id='img' src='../images/${jsonResponse.user.image}'/><br />
             <i id='edit_account'>Update account</i>
             <input id='profile-pic' type='file' capture/>
             <form name="update_user_form" id="update_user_form">
@@ -95,10 +97,13 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
                     networkError => console.log(networkError)
                 ).then(jsonResponse => {
                     console.log(jsonResponse);
-                    if (!jsonResponse.error) {
+                    if (jsonResponse.message) {
                         setCookie(updatedObj['username'], JSON.stringify(oldDetails), 1);
                         window.location.href = `profile.html?username=${updatedObj['username']}`;
                         document.cookie = oldCookie;
+                        displayError(jsonResponse.message, 'dodgerblue');
+                    } else {
+                        displayError(jsonResponse.error, 'red');
                     }
                 });
         });

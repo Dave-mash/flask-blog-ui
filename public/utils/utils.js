@@ -1,5 +1,27 @@
 // message
 let message = []
+let errors = []
+let msgParams = new URLSearchParams(window.location.search);
+
+// display errors
+let spanMsg = document.getElementById('message');
+let spanDiv = document.querySelector('.span_div');
+console.log(spanMsg)
+const displayError = (msg, color) => {
+    console.log(msg)
+    let span = document.getElementById('message');
+    if (msg) {
+        spanDiv.className += ' span_message';
+        let b = `<b style='color:${color};'>${msg}</b>`;
+        spanMsg.innerHTML = b;
+        span.parentElement.style.display = 'block';
+        span.parentElement.style.background = '#5F5F75';
+        setTimeout(() => {
+            span.parentElement.style.display = 'none';
+        }, 5000);
+    }
+}
+
 
 // set cookie value
 const setCookie = (cname, cvalue, exdays) => {

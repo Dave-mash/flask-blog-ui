@@ -42,12 +42,11 @@ form.addEventListener('submit', (e) => {
             return response.json();
         }, networkError => console.log(networkError.message))
         .then(jsonResponse => {
-            console.log(jsonResponse.error)
-            if (jsonResponse.error) {
-                let b = `<b class="error_message" style="color:red;">${jsonResponse.error}</b>`;
-                document.getElementById('error_span').innerHTML = b;
-            } else {
+            if (jsonResponse.message) {
+                displayError(jsonResponse['message'], 'dodgerblue');
                 window.location.replace(`${serverUrl}/login.html`);
+            } else {
+                displayError(jsonResponse['error'], 'red');
             }
     });
 });

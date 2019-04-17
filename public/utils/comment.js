@@ -12,10 +12,13 @@ const commentHelper = (comment) => {
     comDiv.className = 'comment_item';
     var commentItem = '';
 
+    console.log(comment.username)
+    console.log(username)
+
     if (comment.username == username) {
         commentItem = `
             <div class='img_name'>
-                <img src='../images/user.png' id='user_pic' />
+                <img src='../images/${comment.photo}' id='user_pic' /><br/>
                 <b id='author_id'>${comment.username}</b>
             </div>
             <div class='comment_details'>
@@ -26,8 +29,13 @@ const commentHelper = (comment) => {
     } else {
         console.log(comment)
         commentItem = `
-            <b id='author_id'>${comment.username}</b>
-            <p class='comment_text'>${comment.comment}</p>
+            <div class='img_name'>
+                <img src='../images/${comment.photo}' id='user_pic' />
+                <b id='author_id'>${comment.username}</b>
+            </div>
+            <div class='comment_details'>
+                <p class='comment_text'>${comment.comment}</p>
+            </div>
         `;
     }
     comDiv.innerHTML = commentItem;
@@ -57,8 +65,11 @@ const commentHelper = (comment) => {
                         let child = btn.parentElement.parentElement;
                         parent.removeChild(child);
                         socket.emit('removeComment', btn)
-                        console.log(parent)
-                        console.log(child)
+                        if (jsonResponse.message) {
+                            displayError(jsonResponse['message'], 'dodgerblue');
+                        } else {
+                            displayError(jsonResponse['error'], 'red');
+                        }
                     });
             });
         });
@@ -130,23 +141,29 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
                         },
                         networkError => console.log(networkError.message)
                     ).then(jsonResponse => {
-                        window.location.href = `index.html?username=${user.username}&message=${jsonResponse.message}`;
                         console.log(jsonResponse);
+                        if (jsonResponse.message) {
+                            window.location.href = `index.html?username=${user.username}&message=${jsonResponse.message}`;
+                            displayError(jsonResponse['message'], 'dodgerblue');
+                        } else {
+                            displayError(jsonResponse['error'], 'red');
+                        }
                     });
             });
 
             let inputValue = jsonResponse.post.title;
             let txtValue = jsonResponse.post.body;
+            console.log(inputValue)
             
             let editPostForm = `
-                <input
-                    value=${inputValue}
-                    type="text"
+                <textarea
                     name="title"
                     placeholder="title"
+                    cols="20"
+                    rows="1"
                     id="title"
                     autoFocus
-                >
+                >${inputValue}</textarea>
                 <br />
                 <textarea
                     name="body"
@@ -194,13 +211,19 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
                     },
                     networkError => console.log(networkError.message)
                 ).then(jsonResponse => {
-                    window.location.href = `index.html${window.location.search}&message=${jsonResponse.message}`
+                    if (jsonResponse.message) {
+                        displayError(jsonResponse.message, 'dodgerblue');
+                        window.location.href = `index.html${window.location.search}&message=${jsonResponse.message}`
+                    } else {
+                        displayError(jsonResponse.error, 'red');
+                    }
                 });
             });
 
             updateBtn.addEventListener('click', () => {
                 if (postFormDiv.style.display === 'none') {
                     postFormDiv.style.display = 'block'
+                    console.log(inputValue)
                 } else {
                     postFormDiv.style.display = 'none'
                 }
@@ -211,26 +234,29 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
         title.textContent = jsonResponse.post.title;
         body.textContent = jsonResponse.post.body;
 
-    });
-
-// fetch comments
-
-fetch(`${fetchUrl}/${user.post}/comments`, {
-        mode: 'cors'
-    })
-    .then(res => {
-            return res.json();
-        },
-        networkError => console.log(networkError.message)
-    ).then(jsonResponse => {
-
-        console.log(jsonResponse)
-        if (jsonResponse.comments) {
-            jsonResponse.comments.forEach(comment => {
-                commentHelper(comment);
-            });
+        if (jsonResponse.status === 200) {
+            console.log('This part is done')
+            // fetch comments
+            
+            fetch(`${fetchUrl}/${user.post}/comments`, {
+                    mode: 'cors'
+                })
+                .then(res => {
+                        return res.json();
+                    },
+                    networkError => console.log(networkError.message)
+                ).then(jsonResponse => {
+            
+                    console.log(jsonResponse)
+                    if (jsonResponse.comments) {
+                        jsonResponse.comments.forEach(comment => {
+                            commentHelper(comment);
+                        });
+                    }
+                });
         }
     });
+
 
 // post a comment
 

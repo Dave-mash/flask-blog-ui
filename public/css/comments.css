@@ -29,9 +29,11 @@
     box-sizing: border-box;
     padding: 10px;
     /* background: red; */
-    display: flex;
-    flex-direction: column;
-    padding-right: 15px;
+    text-align: center;
+}
+
+#author_id {
+    display: block;
 }
 
 #edit_post button {
@@ -64,6 +66,7 @@
     padding: 10px 20px;
     border: 1px solid #ccc;
     width: 100%;
+    border-radius: 3px;
 }
 
 #delete_button {
@@ -80,6 +83,7 @@
 .comment_item {
     display: flex;
     margin-bottom: 20px;
+    /* background: blue; */
 }
 
 .comment_details {
@@ -87,6 +91,7 @@
     background: rgb(238, 237, 237);
     border-radius: 2px;
     padding: 10px;
+    height: auto;
 }
 
 .comment_details p {
@@ -131,6 +136,8 @@
 #user_pic {
     width: 50px;
     height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
 }
 
 .comments_div {
