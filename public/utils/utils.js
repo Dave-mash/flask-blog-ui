@@ -15,7 +15,7 @@ const displayError = (msg, color) => {
         let b = `<b style='color:${color};'>${msg}</b>`;
         spanMsg.innerHTML = b;
         span.parentElement.style.display = 'block';
-        span.parentElement.style.background = '#5F5F75';
+        span.parentElement.style.background = '#ccc';
         setTimeout(() => {
             span.parentElement.style.display = 'none';
         }, 5000);
@@ -88,15 +88,13 @@ if (log) {
 // profile page
 const profile = document.getElementById('profile_anchor_tag');
 profile.addEventListener('click', () => {
+    console.log('clicked')
     let profileParams = new URLSearchParams(window.location.search);
     let myParams = profileParams.get('username');
-    let span = document.getElementById('login_prompt');
     if (myParams) {
-        span.innerHTML = '';
         window.location.href = `${serverUrl}/profile.html?username=${myParams}`;
     } else {
-        span.textContent = 'Please log in first to access your profile page!';
-        span.style.color = 'red';
+        displayError('Please log in first to access the profile page!', 'red');
     }
 });
 
@@ -124,3 +122,6 @@ const serverUrl = window.location.hostname === '127.0.0.1' ? 'http://127.0.0.1:3
 const fetchUrl = window.location.hostname === '127.0.0.1' ? 'http://127.0.0.1:5000/api/v1' : 'https://flask-blog-api.herokuapp.com/api/v1';
 console.log(serverUrl)
 console.log(fetchUrl)
+
+
+

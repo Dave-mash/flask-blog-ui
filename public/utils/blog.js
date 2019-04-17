@@ -29,7 +29,8 @@ const postsHandler = (post) => {
 
     mainDiv.insertBefore(postItem, mainDiv.childNodes[0]);
 
-    let postComment = document.querySelector('.post_title');
+    let postComment = document.querySelector('.post_item_div');
+    postComment.style.cursor = 'pointer';
 
     postComment.addEventListener('click', () => {
         console.log('clicked');

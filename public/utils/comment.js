@@ -77,7 +77,8 @@ const commentHelper = (comment) => {
 }
 
 socket.on('newComment', (comment) => {
-    commentHelper(comment);
+    document.location.reload()
+    // commentHelper(comment);
     console.log('New comment!', comment);
 });
 
