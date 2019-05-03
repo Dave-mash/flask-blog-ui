@@ -6,9 +6,7 @@ let msgParams = new URLSearchParams(window.location.search);
 // display errors
 let spanMsg = document.getElementById('message');
 let spanDiv = document.querySelector('.span_div');
-console.log(spanMsg)
 const displayError = (msg, color) => {
-    console.log(msg)
     let span = document.getElementById('message');
     if (msg) {
         spanDiv.className += ' span_message';
@@ -53,12 +51,9 @@ const log = document.getElementById('log_state');
 if (log) {
     log.addEventListener('click', (e) => {
         if (log.textContent === 'Logout') {
-            console.log(log)
             let blogParams = new URLSearchParams(window.location.search);
             let myParams = blogParams.get('username');
             let storedUser = JSON.parse(getCookie(myParams));
-    
-            console.log(storedUser)
     
             fetch(`${fetchUrl}/auth/${storedUser.id}/logout`, {
                     method: 'POST',
@@ -68,7 +63,6 @@ if (log) {
                     }
                 })
                 .then(res => {
-                        console.log(res)
                         return res.json()
                     },
                     networkError => console.log(networkError.message))
@@ -77,7 +71,6 @@ if (log) {
                     document.cookie = `${myParams}=${JSON.stringify(storedUser)}; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/`
                     window.location.replace(`${serverUrl}/index.html`);
                     message.push(jsonResponse.message)
-                    console.log(document.cookie)
                 });
         } else if (log.textContent == 'Login') {
             window.location.href = `${serverUrl}/login.html`;
@@ -88,7 +81,6 @@ if (log) {
 // profile page
 const profile = document.getElementById('profile_anchor_tag');
 profile.addEventListener('click', () => {
-    console.log('clicked')
     let profileParams = new URLSearchParams(window.location.search);
     let myParams = profileParams.get('username');
     if (myParams) {
@@ -120,8 +112,6 @@ a.style.cursor = 'pointer';
 // urls
 const serverUrl = window.location.hostname === '127.0.0.1' ? 'http://127.0.0.1:3000' : 'https://flask-blogify.herokuapp.com';
 const fetchUrl = window.location.hostname === '127.0.0.1' ? 'http://127.0.0.1:5000/api/v1' : 'https://flask-blog-api.herokuapp.com/api/v1';
-console.log(serverUrl)
-console.log(fetchUrl)
 
 
 

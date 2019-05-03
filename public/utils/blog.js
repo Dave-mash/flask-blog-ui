@@ -1,5 +1,4 @@
 let blogParams = new URLSearchParams(window.location.search);
-console.log(message)
 
 const mainDiv = document.querySelector('.post_container');
 const socket = io();
@@ -37,7 +36,6 @@ const postsHandler = (post) => {
         let urlSearch = new URLSearchParams(window.location.search);
         let username = urlSearch.get('username');
         if (username) {
-            console.log(getCookie(username))
             let user = JSON.parse(getCookie(username));
             user['post'] = post['id'];
             setCookie(username, JSON.stringify(user), 1);
@@ -57,7 +55,6 @@ socket.on('disconnect', () => {
 socket.on('newPost', (post) => {
     postsHandler(post);
     document.location.reload()
-    console.log('New post!', post)
 });
 
 socket.on('removePost', () => {
@@ -86,7 +83,6 @@ fetch(`${fetchUrl}/posts`)
             postsHandler(post);
         });
 
-        console.log(jsonResponse)
     });
 
 const form = document.getElementById('post_form');

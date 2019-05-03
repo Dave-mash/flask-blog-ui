@@ -1,7 +1,6 @@
 // user sign up event
 
 const form = document.getElementById('signup_form')
-console.log(form)
 const userUrl = `${fetchUrl}/auth/signup`;
 
 let span = document.getElementById('error_span');

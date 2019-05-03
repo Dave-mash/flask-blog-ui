@@ -22,7 +22,6 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
         },
         networkError => console.log(networkError)
     ).then(jsonResponse => {
-        console.log(jsonResponse)
         let home = document.getElementById('home_id');
 
         home.addEventListener('click', () => {
@@ -63,7 +62,6 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
             "confirm_password": 'new',
             "image": "user.png"
         }
-        console.log(updatedObj['image'])
 
         fName.addEventListener('change', (e) => { updatedObj['first_name'] = e.target.value; });
         lName.addEventListener('change', (e) => { updatedObj['last_name'] = e.target.value; });
@@ -73,12 +71,10 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
         confirmPass.addEventListener('change', (e) => { updatedObj['confirm_password'] = e.target.value; });
         img.addEventListener('change', (e) => { updatedObj['image'] = e.target.value; });
 
-        console.log(jsonResponse.user.username)
         let oldDetails = JSON.parse(getCookie(jsonResponse.user.username));
         let time = new Date();
         time.setTime(time.getDate('1-1-1970'));
         let oldCookie = jsonResponse.user.username + "=" + JSON.stringify(oldDetails) + ";expires=" + time + ";path=/;";
-        console.log(oldCookie);
 
         document.getElementById('update_user_form').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -96,7 +92,7 @@ fetch(`${fetchUrl}/profile/${store.id}`, {
                     },
                     networkError => console.log(networkError)
                 ).then(jsonResponse => {
-                    console.log(jsonResponse);
+        
                     if (jsonResponse.message) {
                         setCookie(updatedObj['username'], JSON.stringify(oldDetails), 1);
                         window.location.href = `profile.html?username=${updatedObj['username']}`;

@@ -12,9 +12,6 @@ const commentHelper = (comment) => {
     comDiv.className = 'comment_item';
     var commentItem = '';
 
-    console.log(comment.username)
-    console.log(username)
-
     if (comment.username == username) {
         commentItem = `
             <div class='img_name'>
@@ -27,7 +24,6 @@ const commentHelper = (comment) => {
             </div>
         `;
     } else {
-        console.log(comment)
         commentItem = `
             <div class='img_name'>
                 <img src='../images/${comment.photo}' id='user_pic' />
@@ -40,13 +36,11 @@ const commentHelper = (comment) => {
     }
     comDiv.innerHTML = commentItem;
     commentDiv.appendChild(comDiv)
-    console.log(commentDiv);
     let delBtn = document.querySelectorAll('.del_btn');
 
     if (delBtn) {
         delBtn.forEach(btn => {
             btn.addEventListener('click', () => {
-                console.log('clicked')
                 fetch(`${fetchUrl}/${comment.user_id}/${comment.post_id}/comments/${comment.id}`, {
                         method: 'DELETE',
                         mode: 'cors',
@@ -60,7 +54,6 @@ const commentHelper = (comment) => {
                         },
                         networkError => console.log(networkError)
                     ).then(jsonResponse => {
-                        console.log(jsonResponse);
                         let parent = btn.parentElement.parentElement.parentElement;
                         let child = btn.parentElement.parentElement;
                         parent.removeChild(child);
@@ -79,12 +72,9 @@ const commentHelper = (comment) => {
 socket.on('newComment', (comment) => {
     document.location.reload()
     // commentHelper(comment);
-    console.log('New comment!', comment);
 });
 
 socket.on('deletedComment', (comment) => {
-    console.log('Comment deleted');
-    console.log(comment);
     document.location.reload()
 });
 
@@ -112,12 +102,10 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
         const title = document.getElementById('post_title');
         let span = document.getElementById('edit_post');
         let i = document.createElement('i');
-        console.log(jsonResponse)
         i.textContent = ` Written by: ${jsonResponse.post.username}`;
         i.id = 'writer';
         span.appendChild(i);
         if (user.id === jsonResponse.post.author_id) {
-            console.log('matched')
             let editDetails = document.createElement('div');
             let buttons = `
                 <button id='update_button' style='cursor:pointer'>update</button>
@@ -142,7 +130,6 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
                         },
                         networkError => console.log(networkError.message)
                     ).then(jsonResponse => {
-                        console.log(jsonResponse);
                         if (jsonResponse.message) {
                             window.location.href = `index.html?username=${user.username}&message=${jsonResponse.message}`;
                             displayError(jsonResponse['message'], 'dodgerblue');
@@ -154,7 +141,6 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
 
             let inputValue = jsonResponse.post.title;
             let txtValue = jsonResponse.post.body;
-            console.log(inputValue)
             
             let editPostForm = `
                 <textarea
@@ -197,7 +183,6 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
 
             postFormDiv.addEventListener('submit', (e) => {
                 e.preventDefault();
-                console.log(update);
                 fetch(`${fetchUrl}/${jsonResponse.post.author_id}/posts/${jsonResponse.post.id}`, {
                     method: 'PUT',
                     mode: 'cors',
@@ -224,19 +209,16 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
             updateBtn.addEventListener('click', () => {
                 if (postFormDiv.style.display === 'none') {
                     postFormDiv.style.display = 'block'
-                    console.log(inputValue)
                 } else {
                     postFormDiv.style.display = 'none'
                 }
             });
         }
         const body = document.getElementById('post_body');
-        console.log(jsonResponse)
         title.textContent = jsonResponse.post.title;
         body.textContent = jsonResponse.post.body;
 
         if (jsonResponse.status === 200) {
-            console.log('This part is done')
             // fetch comments
             
             fetch(`${fetchUrl}/${user.post}/comments`, {
@@ -247,8 +229,6 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
                     },
                     networkError => console.log(networkError.message)
                 ).then(jsonResponse => {
-            
-                    console.log(jsonResponse)
                     if (jsonResponse.comments) {
                         jsonResponse.comments.forEach(comment => {
                             commentHelper(comment);
@@ -299,7 +279,7 @@ socket.on('connect', () => {
                 },
                 networkError => console.log(networkError.message)
             ).then(jsonResponse => {
-                console.log(jsonResponse)
+    
                 document.location.reload()
                 socket.emit('createComment', newComment)
             });

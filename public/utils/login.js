@@ -50,7 +50,6 @@ form.addEventListener('submit', (e) => {
                     window.location.replace(`${serverUrl}/index.html?username=` + jsonResponse.username);
                 } else {
                     window.location.href = document.referrer;
-                    console.log(window.location.href);
                 }
                 displayError(jsonResponse.message, 'dodgerblue');
             } else {
