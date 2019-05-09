@@ -3,6 +3,8 @@ let blogParams = new URLSearchParams(window.location.search);
 const mainDiv = document.querySelector('.post_container');
 const socket = io();
 
+document.onload
+
 const postsHandler = (post) => {
     let postDiv = `
         <div class="profile_photo">

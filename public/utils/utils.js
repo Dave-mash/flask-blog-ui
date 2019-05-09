@@ -20,7 +20,6 @@ const displayError = (msg, color) => {
     }
 }
 
-
 // set cookie value
 const setCookie = (cname, cvalue, exdays) => {
     var d = new Date();
