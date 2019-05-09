@@ -22,6 +22,7 @@ const postsHandler = (post) => {
         </div>
     `;
 
+
     let postItem = document.createElement('div');
     postItem.className = 'post_item_div';
     postItem.innerHTML = postDiv;
@@ -81,6 +82,7 @@ fetch(`${fetchUrl}/posts`)
         mainDiv.innerHTML = '';
         jsonResponse['posts'].forEach(post => {
             postsHandler(post);
+            document.querySelector('footer').style.height = '40px';
         });
 
     });

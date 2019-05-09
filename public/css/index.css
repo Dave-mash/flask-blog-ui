@@ -82,6 +82,10 @@ a, #topic_id, .post_title, button {
     border-radius: 2px;
 }
 
+.high {
+    height: 60vh;
+}
+
 .post_blog_form {
     flex: 40%;
     text-align: center;
@@ -215,7 +219,7 @@ footer {
     background: #5F5F75;
     width: 100%;
     text-align: center;
-    height: 40px;
+    height: 50vh;
 }
 
 footer p {
