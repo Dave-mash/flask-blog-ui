@@ -1,8 +1,7 @@
 let commentParams = new URLSearchParams(window.location.search);
 const post = commentParams.get('post');
-const bodyText = commentParams.get('body');
 const username = commentParams.get('username');
-let user = JSON.parse(getCookie(username));
+let user = JSON.parse(getCookie('cookie'));
 
 const socket = io();
 
@@ -12,7 +11,7 @@ const commentHelper = (comment) => {
     comDiv.className = 'comment_item';
     var commentItem = '';
 
-    if (comment.username == username) {
+    if (comment.username == user.username) {
         commentItem = `
             <div class='img_name'>
                 <img src='../images/${comment.photo}' id='user_pic' /><br/>
@@ -91,9 +90,8 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
         let home = document.getElementById('home_id');
         home.style.cursor = 'pointer';
         home.addEventListener('click', () => {
-            if (window.location.href.includes('username')) {
-                const username = commentParams.get('username');
-                window.location.href = `${serverUrl}/index.html?username=` + username;
+            if (user.username) {
+                window.location.href = `${serverUrl}/index.html`;
             } else {
                 window.location.href = `${serverUrl}/index.html`;
             }
@@ -131,7 +129,7 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
                         networkError => console.log(networkError.message)
                     ).then(jsonResponse => {
                         if (jsonResponse.message) {
-                            window.location.href = `index.html?username=${user.username}&message=${jsonResponse.message}`;
+                            window.location.href = `index.html?message=${jsonResponse.message}`;
                             displayError(jsonResponse['message'], 'dodgerblue');
                         } else {
                             displayError(jsonResponse['error'], 'red');
@@ -199,7 +197,7 @@ fetch(`${fetchUrl}/posts/${user.post}`, {
                 ).then(jsonResponse => {
                     if (jsonResponse.message) {
                         displayError(jsonResponse.message, 'dodgerblue');
-                        window.location.href = `index.html${window.location.search}&message=${jsonResponse.message}`
+                        window.location.href = `index.html${window.location.search}?message=${jsonResponse.message}`
                     } else {
                         displayError(jsonResponse.error, 'red');
                     }
@@ -260,7 +258,7 @@ socket.on('connect', () => {
 
             let newComment = {
                 comment: comment.comment,
-                username: username
+                username: user.username
 
             }
 

@@ -50,9 +50,7 @@ const log = document.getElementById('log_state');
 if (log) {
     log.addEventListener('click', (e) => {
         if (log.textContent === 'Logout') {
-            let blogParams = new URLSearchParams(window.location.search);
-            let myParams = blogParams.get('username');
-            let storedUser = JSON.parse(getCookie(myParams));
+            let storedUser = JSON.parse(getCookie('cookie'));
     
             fetch(`${fetchUrl}/auth/${storedUser.id}/logout`, {
                     method: 'POST',
@@ -67,7 +65,7 @@ if (log) {
                     networkError => console.log(networkError.message))
                 .then(jsonResponse => {
                     console.log(jsonResponse);
-                    document.cookie = `${myParams}=${JSON.stringify(storedUser)}; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/`
+                    document.cookie = `cookie=${JSON.stringify(storedUser)}; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/`
                     window.location.replace(`${serverUrl}/index.html`);
                     message.push(jsonResponse.message)
                 });
@@ -105,7 +103,7 @@ home.addEventListener('click', () => {
 
 // login/logout
 let a = document.getElementById('log_state');
-a.textContent = window.location.search ? 'Logout' : 'Login';
+a.textContent = document.cookie ? 'Logout' : 'Login';
 a.style.cursor = 'pointer';
 
 // urls

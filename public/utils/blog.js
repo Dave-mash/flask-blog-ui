@@ -3,7 +3,6 @@ let blogParams = new URLSearchParams(window.location.search);
 const mainDiv = document.querySelector('.post_container');
 const socket = io();
 
-document.onload
 
 const postsHandler = (post) => {
     let postDiv = `
@@ -36,13 +35,11 @@ const postsHandler = (post) => {
 
     postComment.addEventListener('click', () => {
         console.log('clicked');
-        let urlSearch = new URLSearchParams(window.location.search);
-        let username = urlSearch.get('username');
-        if (username) {
-            let user = JSON.parse(getCookie(username));
+        if (document.cookie) {
+            let user = JSON.parse(getCookie('cookie'));
             user['post'] = post['id'];
-            setCookie(username, JSON.stringify(user), 1);
-            window.location.href = `${serverUrl}/comment.html?username=${username}`;
+            setCookie('cookie', JSON.stringify(user), 1);
+            window.location.href = `${serverUrl}/comment.html`;
         } else {
             displayError('Please log in first!', 'red');
         }
@@ -76,7 +73,7 @@ fetch(`${fetchUrl}/posts`)
         networkError => console.log(networkError.message))
     .then(jsonResponse => {
         let reg = document.getElementById('register_state');
-        if (window.location.search) {
+        if (document.cookie) {
             reg.style.display = 'none';
         } else {
             reg.style.display = 'block';
@@ -108,7 +105,7 @@ socket.on('connect', () => {
         let myParams = urlParams.get('username');
         let username = getCookie(myParams); // Local storage key
 
-        if (!username) {
+        if (!document.cookie) {
             console.log('log in first')
             displayError('You are not logged in!', 'red');
         } else {

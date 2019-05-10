@@ -45,9 +45,9 @@ form.addEventListener('submit', (e) => {
                     auth_token: jsonResponse.auth_token,
                     username: jsonResponse.username
                 }
-                setCookie(jsonResponse.username, JSON.stringify(details), 1);
+                setCookie('cookie', JSON.stringify(details), 1);
                 if (!document.referrer.includes('username')) {
-                    window.location.replace(`${serverUrl}/index.html?username=` + jsonResponse.username);
+                    window.location.replace(`${serverUrl}/index.html`);
                 } else {
                     window.location.href = document.referrer;
                 }
